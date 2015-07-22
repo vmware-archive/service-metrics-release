@@ -1,0 +1,67 @@
+---
+name: service-metrics
+
+director_uuid: <%= `bosh status --uuid` %>
+
+releases:
+- name: service-metrics
+  version: latest
+
+properties:
+  etcd:
+    machines:
+    - 10.244.0.42
+  metron_agent:
+    deployment: bosh-lite
+    zone: z1
+  loggregator_endpoint:
+    shared_secret: PLACEHOLDER-LOGGREGATOR-SECRET
+  syslog_aggregator:
+    address: 127.0.0.1
+    port: 1234
+  nats:
+    machines: 
+    - 10.244.0.6
+    port: 4222
+    user: nats
+    password: nats
+
+jobs:
+- name: service-metrics
+  instances: 1
+  resource_pool: service-metrics
+  networks:
+  - name: service-metrics
+  templates:
+  - {release: service-metrics, name: service-metrics}
+
+networks:
+- name: service-metrics
+  subnets:
+  - range: 10.244.8.0/30
+    reserved: [10.244.8.1]
+    cloud_properties: {}
+  - range: 10.244.8.4/30
+    reserved: [10.244.8.5]
+    cloud_properties: {}
+
+resource_pools:
+- name: service-metrics
+  network: service-metrics
+  cloud_properties: {}
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    version: latest
+
+compilation:
+  workers: 1
+  network: service-metrics
+  cloud_properties: {}
+
+update:
+  canaries: 1
+  max_in_flight: 1
+  serial: false
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
+
