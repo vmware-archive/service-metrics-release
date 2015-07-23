@@ -2,6 +2,7 @@
 name: service-metrics
 
 templates:
+  service_metrics_ctl.erb: bin/service_metrics_ctl
   metron_agent_ctl.erb: bin/metron_agent_ctl
   metron_agent.json.erb: config/metron_agent.json
   syslog_forwarder.conf.erb: config/syslog_forwarder.conf
@@ -10,8 +11,22 @@ packages:
 - common
 - metron_agent
 - go
+- service-metrics
 
 properties:
+  service_metrics.metrics_command:
+    description: "Command to obtain metrics in JSON format"
+  service_metrics.metrics_command_args:
+    description: "Arguments to be passed to the metrics command (see service_metrics.metrics_command)"
+    default: []
+  service_metrics.interval:
+    description: "Interval to repeatedly obtain and emit metrics, in seconds"
+    default: 60
+  service_metrics.debug:
+    description: "boolean value to turn on verbose mode"
+    default: false
+
+
   syslog_daemon_config.address:
     description: "IP address for syslog aggregator"
   syslog_daemon_config.port:

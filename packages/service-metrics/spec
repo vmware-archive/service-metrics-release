@@ -1,0 +1,8 @@
+---
+name: service-metrics
+
+dependencies:
+- go
+
+files:
+- service-metrics/**/*.go

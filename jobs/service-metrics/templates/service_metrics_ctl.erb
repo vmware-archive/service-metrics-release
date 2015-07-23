@@ -1,0 +1,48 @@
+#!/bin/bash -e
+
+RUN_DIR=/var/vcap/sys/run/service-metrics
+LOG_DIR=/var/vcap/sys/log/service-metrics
+PKG_DIR=/var/vcap/packages/service-metrics
+JOB_DIR=/var/vcap/jobs/service-metrics
+
+PIDFILE=$RUN_DIR/service-metrics.pid
+
+source /var/vcap/packages/common/utils.sh
+
+case $1 in
+
+  start)
+    pid_guard $PIDFILE "ServiceMetrics"
+
+    mkdir -p $RUN_DIR
+    mkdir -p $LOG_DIR
+
+    chown -R vcap:vcap $LOG_DIR
+
+    echo $$ > $PIDFILE
+
+    <% p("service_metrics.debug") == true ? debug_string = "--debug " : debug_string = "" %>
+
+    exec chpst -u vcap:vcap ${PKG_DIR}/bin/service-metrics \
+      --metron-addr localhost:<%= p("metron_agent.dropsonde_incoming_port") %> \
+      --metrics-cmd <%= p("service_metrics.metrics_command") %> \
+      <%= p("service_metrics.metrics_command_args").collect { |e| "--metrics-cmd-arg '#{e}'" }.join(" ") %> \
+      --metrics-interval <%= p("service_metrics.interval") %>s \
+      <%= debug_string %> \
+         >>$LOG_DIR/metron_agent.stdout.log \
+         2>>$LOG_DIR/metron_agent.stderr.log
+
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE 40
+
+    ;;
+
+  *)
+    echo "Usage: metron_agent_ctl {start|stop}"
+
+    ;;
+
+esac
+

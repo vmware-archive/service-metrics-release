@@ -8,6 +8,11 @@ releases:
   version: latest
 
 properties:
+  service_metrics:
+    metrics_command: /bin/echo
+    metrics_command_args:
+    - -n
+    - '[{"key":"foo","value":99,"unit":"bar"}]'
   etcd:
     machines:
     - 10.244.0.42

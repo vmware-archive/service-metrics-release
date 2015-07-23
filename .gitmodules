@@ -1,3 +1,6 @@
 [submodule "src/loggregator"]
 	path = src/loggregator
 	url = git@github.com:cloudfoundry/loggregator.git
+[submodule "src/service-metrics"]
+	path = src/service-metrics
+	url = git@github.com:pivotal-cf-experimental/service-metrics.git
