@@ -9,6 +9,7 @@ releases:
 
 properties:
   service_metrics:
+    interval: 5
     metrics_command: /bin/echo
     metrics_command_args:
     - -n

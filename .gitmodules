@@ -4,3 +4,9 @@
 [submodule "src/service-metrics"]
 	path = src/service-metrics
 	url = git@github.com:pivotal-cf-experimental/service-metrics.git
+[submodule "src/noaa"]
+	path = src/noaa
+	url = git@github.com:cloudfoundry/noaa.git
+[submodule "spec/assets/src/github.com/cloudfoundry/noaa"]
+	path = spec/assets/src/github.com/cloudfoundry/noaa
+	url = git@github.com:cloudfoundry/noaa.git
