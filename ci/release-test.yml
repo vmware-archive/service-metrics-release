@@ -1,0 +1,16 @@
+---
+platform: linux
+
+image: docker:///cflondonservices/london-services-ci-base#stable
+
+inputs:
+  - name: service-metrics-release-develop
+
+run:
+  path: service-metrics-release-develop/ci/scripts/release-test
+
+params:
+  CF_API:
+  CF_USERNAME:
+  CF_PASSWORD:
+  DOPPLER_ADDR:

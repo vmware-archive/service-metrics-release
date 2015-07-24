@@ -1,0 +1,39 @@
+---
+resources:
+- name: service-metrics-release-develop
+  type: git
+  source:
+    branch: develop
+    private_key: {{git-private-key}}
+    uri: git@github.com:pivotal-cf-experimental/service-metrics-release
+
+- name: service-metrics-release-master
+  type: git
+  source:
+    branch: master
+    private_key: {{git-private-key}}
+    uri: git@github.com:pivotal-cf-experimental/service-metrics-release
+
+jobs:
+- name: release-test
+  plan:
+  - get: service-metrics-release-develop
+    trigger: true
+  - task: release-test
+    file: service-metrics-release-develop/ci/release-test.yml
+    privileged: true
+    config:
+      params:
+        CF_API: {{cf-api}}
+        CF_USERNAME: {{cf-username}}
+        CF_PASSWORD: {{cf-password}}
+        DOPPLER_ADDR: {{doppler-addr}}
+
+- name: promote-to-master
+  plan:
+  - get: service-metrics-release-develop
+    trigger: true
+    passed: [release-test]
+  - put: service-metrics-release-master
+    params:
+      repository: service-metrics-release-develop

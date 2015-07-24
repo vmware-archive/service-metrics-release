@@ -1,0 +1,18 @@
+#!/bin/bash -eux
+
+go get github.com/cloudfoundry/noaa/firehose_sample
+# go install github.com/cloudfoundry/noaa/firehose_sample
+
+MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# This script expects to live two directories below the base directory.
+BASE_DIR="$( cd "${MY_DIR}/../.." && pwd )"
+
+pushd "${BASE_DIR}"
+  # cf api --skip-ssl-validation $CF_API
+  # cf auth $CF_USERNAME $CF_PASSWORD
+  # export CF_ACCESS_TOKEN="`cf oauth-token | tail -n 1`"
+  # firehose_sample
+  bundle install
+  bundle exec rake spec
+popd
