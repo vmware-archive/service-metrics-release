@@ -14,11 +14,39 @@ resources:
     private_key: {{git-private-key}}
     uri: git@github.com:pivotal-cf-experimental/service-metrics-release
 
+- name: aws-stemcell
+  type: bosh-io-stemcell
+  source:
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+
+- name: bosh
+  type: bosh-deployment
+  source:
+    target: {{bosh-target}}
+    username: {{bosh-username}}
+    password: {{bosh-password}}
+    deployment: service-metrics-release
+
 jobs:
+- name: deploy-release
+  plan:
+  - get: service-metrics-release-develop
+    trigger: true
+  - get: aws-stemcell
+  - task: create-release
+    file: service-metrics-release-develop/ci/create-release.yml
+    privileged: true
+  - put: bosh
+    params:
+      manifest: service-metrics-release-develop/manifests/service-metrics-aws.yml
+      stemcells: aws-stemcell/**/*.tgz
+      releases: service-metrics-release-develop/dev_releases/**/*.tgz
+
 - name: release-test
   plan:
   - get: service-metrics-release-develop
     trigger: true
+    passed: [deploy-release]
   - task: release-test
     file: service-metrics-release-develop/ci/release-test.yml
     privileged: true

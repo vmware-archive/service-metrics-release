@@ -1,0 +1,11 @@
+#!/bin/bash -eux
+
+MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# This script expects to live two directories below the base directory.
+BASE_DIR="$( cd "${MY_DIR}/../.." && pwd )"
+
+pushd "${BASE_DIR}"
+  bundle install
+  bundle exec bosh create release --with-tarball --force --name service-metrics-release
+popd
