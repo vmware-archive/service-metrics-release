@@ -13,7 +13,7 @@ properties:
     metrics_command: /bin/echo
     metrics_command_args:
     - -n
-    - '[{"key":"foo","value":99,"unit":"bar"}]'
+    - '[{"key":"service-dummy","value":99,"unit":"metric"}]'
   etcd:
     machines:
     - 10.244.0.42

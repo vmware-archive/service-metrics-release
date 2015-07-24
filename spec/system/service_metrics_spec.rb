@@ -5,11 +5,10 @@ describe 'service metrics' do
 
   before(:all) do
     @outFile = Tempfile.new('smetrics')
-    @auth_token = cf_auth_token
     @pid = spawn(
       {
-        "DOPPLER_ADDR" => "wss://doppler.10.244.0.34.xip.io:443",
-        "CF_ACCESS_TOKEN" => @auth_token
+        "DOPPLER_ADDR" => doppler_address,
+        "CF_ACCESS_TOKEN" => cf_auth_token
       },
       'firehose_sample',
       [:out, :err] => [@outFile.path, 'w']
@@ -24,7 +23,7 @@ describe 'service metrics' do
   it "it emits metrics" do
     @found = false
     60.times do
-      if (@outFile.read.include? "foo")
+      if (@outFile.read.include? 'name:"service-dummy"')
         @found = true
         break
       end
