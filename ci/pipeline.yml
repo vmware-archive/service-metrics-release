@@ -44,11 +44,11 @@ jobs:
   - get: aws-stemcell
   - task: create-release
     file: service-metrics-release-develop/ci/create-release.yml
-    privileged: true
-    params:
-      NAME: service-metrics
-      FORCE: true
-      FINAL: false
+    config:
+      params:
+        NAME: service-metrics
+        FORCE: true
+        FINAL: false
   - put: bosh
     params:
       manifest: service-metrics-release-develop/manifests/service-metrics-aws.yml
@@ -79,10 +79,11 @@ jobs:
     passed: [release-test]
   - task: create-release
     file: service-metrics-release-develop/ci/create-release.yml
-    params:
-      NAME: service-metrics
-      FORCE: false
-      FINAL: true
+    config:
+      params:
+        NAME: service-metrics
+        FORCE: false
+        FINAL: true
   - put: final-release
     params: 
       from: create-release/service-metrics-release-develop/releases/service-metrics/service-metrics-(.*).tgz

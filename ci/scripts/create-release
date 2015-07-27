@@ -6,7 +6,7 @@ MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BASE_DIR="$( cd "${MY_DIR}/../.." && pwd )"
 
 pushd "${BASE_DIR}"
-  bundle install
+  bundle install --path vendor/bundle
 
   if [ -n "${FORCE}" ] && [ "$FORCE" == "true" ]; then
     FORCE_OPTION="--force"
