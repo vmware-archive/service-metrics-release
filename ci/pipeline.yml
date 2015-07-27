@@ -44,6 +44,7 @@ resources:
     key: service-metrics-dev
     access_key_id: {{release-bucket-access-key}}
     secret_access_key: {{release-bucket-secret-key}}
+    region_name: eu-west-1
 
 jobs:
 - name: deploy-release
@@ -95,6 +96,7 @@ jobs:
   - get: service-metrics-release-develop
     trigger: true
     passed: [release-test]
+    params: {fetch: [master]} 
   - task: create-release
     file: service-metrics-release-develop/ci/create-release.yml
     config:
@@ -108,12 +110,7 @@ jobs:
     params: 
       from: create-release/service-metrics-release-develop/releases/service-metrics/service-metrics-(.*).tgz
       to: service-metrics/
-
-- name: promote-to-master
-  plan:
-  - get: service-metrics-release-develop
-    trigger: true
-    passed: [release-test]
   - put: service-metrics-release-master
     params:
-      repository: service-metrics-release-develop
+      repository: create-release/service-metrics-release-develop
+      rebase: true
