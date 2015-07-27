@@ -1,7 +1,7 @@
 ---
 name: service-metrics
 
-director_uuid: <%= `bosh status --uuid` %>
+director_uuid: e92258ed-c38a-4ea1-b7d4-fbef77d8e5d0
 
 releases:
 - name: service-metrics
