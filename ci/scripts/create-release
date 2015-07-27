@@ -8,10 +8,12 @@ BASE_DIR="$( cd "${MY_DIR}/../.." && pwd )"
 pushd "${BASE_DIR}"
   bundle install --path vendor/bundle
 
+  FORCE_OPTION=""
   if [ -n "${FORCE}" ] && [ "$FORCE" == "true" ]; then
     FORCE_OPTION="--force"
   fi
 
+  FINAL_OPTION=""
   if [ -n "${FINAL}" ] && [ "$FINAL" == "true" ]; then
     FINAL_OPTION="--final"
   fi
