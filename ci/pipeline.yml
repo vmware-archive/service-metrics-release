@@ -36,9 +36,23 @@ resources:
     access_key_id: {{release-bucket-access-key}}
     secret_access_key: {{release-bucket-secret-key}}
 
+- name: version
+  type: semver
+  source:
+    initial_version: 0.0.0
+    bucket: ci-versions
+    key: service-metrics-dev
+    access_key_id: {{release-bucket-access-key}}
+    secret_access_key: {{release-bucket-secret-key}}
+
 jobs:
 - name: deploy-release
+  serial: true
   plan:
+  - get: version
+    params: {bump: minor, pre: rc}
+  - put: version
+    params: {file: version/number}
   - get: service-metrics-release-develop
     trigger: true
   - get: aws-stemcell
@@ -59,6 +73,8 @@ jobs:
 
 - name: release-test
   plan:
+  - get: version
+    passed: [deploy-release]
   - get: service-metrics-release-develop
     trigger: true
     passed: [deploy-release]
@@ -72,8 +88,10 @@ jobs:
         CF_PASSWORD: {{cf-password}}
         DOPPLER_ADDR: {{doppler-addr}}
 
-- name: ship-it
+- name: build-final
   plan:
+  - get: version
+    passed: [release-test]
   - get: service-metrics-release-develop
     trigger: true
     passed: [release-test]

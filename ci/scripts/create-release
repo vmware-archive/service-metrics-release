@@ -5,7 +5,10 @@ MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # This script expects to live two directories below the base directory.
 BASE_DIR="$( cd "${MY_DIR}/../.." && pwd )"
 
+
 pushd "${BASE_DIR}"
+  VERSION=$(cat ../version/number)
+
   bundle install --path vendor/bundle
 
   FORCE_OPTION=""
@@ -26,5 +29,5 @@ blobstore:
 EOL
   fi
 
-  bundle exec bosh -n create release --with-tarball ${FORCE_OPTION} ${FINAL_OPTION} --name ${NAME}
+  bundle exec bosh -n create release --with-tarball ${FORCE_OPTION} ${FINAL_OPTION} --name ${NAME} --version $VERSION
 popd

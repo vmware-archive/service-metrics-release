@@ -5,6 +5,7 @@ image: docker:///cflondonservices/london-services-ci-base#stable
 
 inputs:
   - name: service-metrics-release-develop
+  - name: version
 
 run:
   path: service-metrics-release-develop/ci/scripts/create-release
