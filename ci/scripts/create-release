@@ -29,9 +29,11 @@ blobstore:
 EOL
   fi
 
-  git config --global user.email "ci@localhost"
-  git config --global user.name "CI Bot"
-  git merge --no-edit master
+  if [ -n "${FINAL_OPTION}" ]; then
+    git config --global user.email "ci@localhost"
+    git config --global user.name "CI Bot"
+    git merge --no-edit master
+  fi
 
   bundle exec bosh -n create release --with-tarball ${FORCE_OPTION} ${FINAL_OPTION} --name ${NAME} --version $VERSION
 
