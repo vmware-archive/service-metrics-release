@@ -25,7 +25,8 @@ resources:
     target: {{bosh-target}}
     username: {{bosh-username}}
     password: {{bosh-password}}
-    deployment: service-metrics-release
+    deployment: service-metrics
+    ignore_ssl: true
 
 jobs:
 - name: deploy-release
@@ -39,8 +40,10 @@ jobs:
   - put: bosh
     params:
       manifest: service-metrics-release-develop/manifests/service-metrics-aws.yml
-      stemcells: aws-stemcell/**/*.tgz
-      releases: service-metrics-release-develop/dev_releases/**/*.tgz
+      stemcells:
+      - aws-stemcell/**/*.tgz
+      releases:
+        - create-release/service-metrics-release-develop/dev_releases/**/*.tgz
 
 - name: release-test
   plan:
