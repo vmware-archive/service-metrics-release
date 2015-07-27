@@ -114,3 +114,16 @@ jobs:
     params:
       repository: create-release/service-metrics-release-develop
       rebase: true
+
+- name: merge-master-into-develop
+  plan:
+    - aggregate:
+      - get: service-metrics-release-master
+        trigger: true
+        params:
+          fetch: [develop]
+    - task: merge-to-develop
+      file: service-metrics-release-master/ci/merge-to-develop.yml
+    - put: service-metrics-release-develop
+      params:
+        repository: merge-to-develop/service-metrics-release-master
