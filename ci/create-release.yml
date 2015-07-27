@@ -8,3 +8,8 @@ inputs:
 
 run:
   path: service-metrics-release-develop/ci/scripts/create-release
+
+params:
+  NAME:
+  FINAL:
+  FORCE:

@@ -28,6 +28,14 @@ resources:
     deployment: service-metrics
     ignore_ssl: true
 
+- name: final-release
+  type: s3
+  source:
+    bucket: cf-services-internal-builds
+    regexp: service-metrics-(.*).tgz
+    access_key_id: {{release-bucket-access-key}}
+    secret_access_key: {{release-bucket-secret-key}}
+
 jobs:
 - name: deploy-release
   plan:
@@ -37,6 +45,10 @@ jobs:
   - task: create-release
     file: service-metrics-release-develop/ci/create-release.yml
     privileged: true
+    params:
+      NAME: service-metrics
+      FORCE: true
+      FINAL: false
   - put: bosh
     params:
       manifest: service-metrics-release-develop/manifests/service-metrics-aws.yml
@@ -59,6 +71,22 @@ jobs:
         CF_USERNAME: {{cf-username}}
         CF_PASSWORD: {{cf-password}}
         DOPPLER_ADDR: {{doppler-addr}}
+
+- name: ship-it
+  plan:
+  - get: service-metrics-release-develop
+    trigger: true
+    passed: [release-test]
+  - task: create-release
+    file: service-metrics-release-develop/ci/create-release.yml
+    params:
+      NAME: service-metrics
+      FORCE: false
+      FINAL: true
+  - put: final-release
+    params: 
+      from: create-release/service-metrics-release-develop/releases/service-metrics/service-metrics-(.*).tgz
+      to: service-metrics
 
 - name: promote-to-master
   plan:

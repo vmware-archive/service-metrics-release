@@ -7,5 +7,14 @@ BASE_DIR="$( cd "${MY_DIR}/../.." && pwd )"
 
 pushd "${BASE_DIR}"
   bundle install
-  bundle exec bosh create release --with-tarball --force --name service-metrics
+
+  if [ -n "${FORCE}" ] && [ "$FORCE" == "true" ]; then
+    FORCE_OPTION="--force"
+  fi
+
+  if [ -n "${FINAL}" ] && [ "$FINAL" == "true" ]; then
+    FINAL_OPTION="--final"
+  fi
+
+  bundle exec bosh create release --with-tarball ${FORCE_OPTION} ${FINAL_OPTION} --name ${NAME}
 popd
