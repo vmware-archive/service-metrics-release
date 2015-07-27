@@ -16,7 +16,15 @@ pushd "${BASE_DIR}"
   FINAL_OPTION=""
   if [ -n "${FINAL}" ] && [ "$FINAL" == "true" ]; then
     FINAL_OPTION="--final"
+
+    cat >config/private.yml <<EOL
+---
+blobstore:
+  s3:
+    access_key_id: ${S3_ACCESS_KEY}
+    secret_access_key: ${S3_SECRET_KEY} 
+EOL
   fi
 
-  bundle exec bosh create release --with-tarball ${FORCE_OPTION} ${FINAL_OPTION} --name ${NAME}
+  bundle exec bosh -n create release --with-tarball ${FORCE_OPTION} ${FINAL_OPTION} --name ${NAME}
 popd

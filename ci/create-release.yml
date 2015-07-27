@@ -11,5 +11,7 @@ run:
 
 params:
   NAME:
-  FINAL:
   FORCE:
+  FINAL:
+  S3_ACCESS_KEY:
+  S3_SECRET_KEY:
