@@ -22,4 +22,6 @@ builds:
     version: 0.1.0-rc.19
   d753d69a-ca25-4963-af14-87c923d12d1c:
     version: 0.1.0-rc.20
+  e5aaf2ab-966e-401d-8718-74a972612dfc:
+    version: 0.1.0-rc.21
 format-version: '2'
