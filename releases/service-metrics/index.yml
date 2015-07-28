@@ -20,4 +20,6 @@ builds:
     version: 0.1.0-rc.18
   481683bf-0694-4fe3-a559-3f7c95115509:
     version: 0.1.0-rc.19
+  d753d69a-ca25-4963-af14-87c923d12d1c:
+    version: 0.1.0-rc.20
 format-version: '2'
