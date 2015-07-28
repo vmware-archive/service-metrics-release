@@ -12,4 +12,6 @@ builds:
     version: 0.1.0-rc.10
   c1344691-ab76-4b00-8d37-bde281ec1e97:
     version: 0.1.0-rc.12
+  2a6be3c2-49b6-41f2-a9e0-a5c72b7e4beb:
+    version: 0.1.0-rc.14
 format-version: '2'
