@@ -6,4 +6,6 @@ builds:
     version: 0.1.0-rc.4
   1449fe79-566a-4ab8-8511-f12c3933221f:
     version: 0.1.0-rc.6
+  48077ca4-12a2-470a-b27d-448b1d562305:
+    version: 0.1.0-rc.8
 format-version: '2'
