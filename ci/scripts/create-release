@@ -39,6 +39,6 @@ EOL
 
   if [ -n "${FINAL_OPTION}" ]; then
     git add -A
-    git commit -m "release v${VERSION}"  
+    git commit -m "release v${VERSION} [ci skip]"  
   fi
 popd
