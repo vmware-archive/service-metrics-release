@@ -113,7 +113,6 @@ jobs:
   - put: service-metrics-release-master
     params:
       repository: create-release/service-metrics-release-develop
-      rebase: true
 
 - name: merge-master-into-develop
   plan:
