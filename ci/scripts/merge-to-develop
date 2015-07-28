@@ -11,5 +11,5 @@ pushd "${BASE_DIR}"
   git config --global user.email "ci@localhost"
   git config --global user.name "CI Bot"
 
-  git merge --no-edit master
+  git merge -m "Merge branch 'master' into develop [ci skip]" master
 popd
