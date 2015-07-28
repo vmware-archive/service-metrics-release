@@ -28,4 +28,6 @@ builds:
     version: 0.1.0-rc.22
   e8124f5c-215e-40a7-a522-c25075ff8030:
     version: 0.1.0-rc.23
+  7b01a261-578d-41ba-b15e-9395a26c3641:
+    version: 0.1.0-rc.25
 format-version: '2'
