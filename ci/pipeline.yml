@@ -1,4 +1,15 @@
 ---
+groups:
+- name: main
+  jobs:
+  - deploy-release
+  - release-test
+  - build-final
+
+- name: merge
+  jobs:
+  - merge-master-into-develop
+
 resources:
 - name: service-metrics-release-develop
   type: git
@@ -7,7 +18,14 @@ resources:
     private_key: {{git-private-key}}
     uri: git@github.com:pivotal-cf-experimental/service-metrics-release
     ignore_paths:
-    - releases/
+    - releases
+
+- name: service-metrics-release-develop-sink
+  type: git
+  source:
+    branch: develop
+    private_key: {{git-private-key}}
+    uri: git@github.com:pivotal-cf-experimental/service-metrics-release
 
 - name: service-metrics-release-master
   type: git
@@ -52,13 +70,14 @@ jobs:
 - name: deploy-release
   serial: true
   plan:
-  - get: version
-    params: {bump: minor, pre: rc}
+  - aggregate:
+    - get: version
+      params: {bump: minor, pre: rc}
+    - get: service-metrics-release-develop
+      trigger: true
+    - get: aws-stemcell
   - put: version
     params: {file: version/number}
-  - get: service-metrics-release-develop
-    trigger: true
-  - get: aws-stemcell
   - task: create-release
     file: service-metrics-release-develop/ci/create-release.yml
     config:
@@ -76,11 +95,12 @@ jobs:
 
 - name: release-test
   plan:
-  - get: version
-    passed: [deploy-release]
-  - get: service-metrics-release-develop
-    trigger: true
-    passed: [deploy-release]
+  - aggregate:
+    - get: version
+      passed: [deploy-release]
+    - get: service-metrics-release-develop
+      trigger: true
+      passed: [deploy-release]
   - task: release-test
     file: service-metrics-release-develop/ci/release-test.yml
     privileged: true
@@ -93,12 +113,13 @@ jobs:
 
 - name: build-final
   plan:
-  - get: version
-    passed: [release-test]
-  - get: service-metrics-release-develop
-    trigger: true
-    passed: [release-test]
-    params: {fetch: [master]} 
+  - aggregate:
+    - get: version
+      passed: [release-test]
+    - get: service-metrics-release-develop
+      trigger: true
+      passed: [release-test]
+      params: {fetch: [master]} 
   - task: create-release
     file: service-metrics-release-develop/ci/create-release.yml
     config:
@@ -108,23 +129,23 @@ jobs:
         FINAL: true
         S3_ACCESS_KEY: {{release-bucket-access-key}}
         S3_SECRET_KEY: {{release-bucket-secret-key}}
-  - put: final-release
-    params: 
-      from: create-release/service-metrics-release-develop/releases/service-metrics/service-metrics-(.*).tgz
-      to: service-metrics/
-  - put: service-metrics-release-master
-    params:
-      repository: create-release/service-metrics-release-develop
+  - aggregate:
+    - put: final-release
+      params: 
+        from: create-release/service-metrics-release-develop/releases/service-metrics/service-metrics-(.*).tgz
+        to: service-metrics/
+    - put: service-metrics-release-master
+      params:
+        repository: create-release/service-metrics-release-develop
 
 - name: merge-master-into-develop
   plan:
-    - aggregate:
-      - get: service-metrics-release-master
-        trigger: true
-        params:
-          fetch: [develop]
+    - get: service-metrics-release-master
+      trigger: true
+      params:
+        fetch: [develop]
     - task: merge-to-develop
       file: service-metrics-release-master/ci/merge-to-develop.yml
-    - put: service-metrics-release-develop
+    - put: service-metrics-release-develop-sink
       params:
         repository: merge-to-develop/service-metrics-release-master
