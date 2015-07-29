@@ -44,4 +44,6 @@ builds:
     version: 0.5.0
   b119f5f8-4f49-4359-a3a6-77f4dc3f9c98:
     version: 1.1.0-rc.1
+  a621da29-cbb6-43ba-8742-bf252e73b476:
+    version: 1.1.0-rc.2
 format-version: '2'
