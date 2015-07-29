@@ -91,7 +91,7 @@ jobs:
   - put: version
     params: {file: version/number}
   - task: create-release
-    file: develop/ci/create-release.yml
+    file: develop/ci/create-release-develop.yml
     config:
       params:
         NAME: service-metrics
@@ -137,7 +137,7 @@ jobs:
       passed: [release-test]
       params: {fetch: [master]} 
   - task: create-release
-    file: develop/ci/create-release.yml
+    file: develop/ci/create-release-develop.yml
     config:
       params:
         NAME: service-metrics
@@ -176,7 +176,7 @@ jobs:
     - get: master
       passed: [promote]
   - task: create-release
-    file: master/ci/create-release.yml
+    file: master/ci/create-release-master.yml
     config:
       params:
         NAME: service-metrics
