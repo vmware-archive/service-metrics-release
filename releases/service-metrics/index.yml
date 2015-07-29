@@ -34,4 +34,6 @@ builds:
     version: 0.1.0-rc.26
   ef8ad3d2-75e1-442f-a3ea-4ef681b289dd:
     version: 0.2.0
+  24784f80-d80f-4d1e-8915-5c433fee6730:
+    version: 0.3.0-rc.2
 format-version: '2'
