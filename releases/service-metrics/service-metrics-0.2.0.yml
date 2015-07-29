@@ -1,0 +1,37 @@
+---
+packages:
+- name: metron_agent
+  version: 96ff90faeb2fa4495bf399f358cf674221638a80
+  fingerprint: 96ff90faeb2fa4495bf399f358cf674221638a80
+  sha1: 49997bd8a7c2092e599646475b8c9ffe1d4c9a5c
+  dependencies:
+  - go
+- name: common
+  version: dbfb71d071c927c2b93e2554c0a0a95d6fb77d6d
+  fingerprint: dbfb71d071c927c2b93e2554c0a0a95d6fb77d6d
+  sha1: 3e0a2d2b6befba9d89fa773e3fd63e59230c1c8c
+  dependencies: []
+- name: go
+  version: 1c91feb55b72e9340a52db974f6d2927b2be225c
+  fingerprint: 1c91feb55b72e9340a52db974f6d2927b2be225c
+  sha1: 2bb289a742de85cee6a9cffbcf142df5eb6acd4e
+  dependencies: []
+- name: service-metrics
+  version: 7e4a5e653673fbbd2c38c4f0e4e91fb1be0a6640
+  fingerprint: 7e4a5e653673fbbd2c38c4f0e4e91fb1be0a6640
+  sha1: c1dc4661b8c168528ac3c48f11139b3259d485e9
+  dependencies:
+  - go
+jobs:
+- name: service-metrics
+  version: a348184db3dd678c5055da48271c688d76b0cd57
+  fingerprint: a348184db3dd678c5055da48271c688d76b0cd57
+  sha1: fcbcf7cfd4eeab7907335039d0f7c06ed6352967
+license:
+  version: e2b08dd8e514c82d91199c4a92ae9ce14cf17ccb
+  fingerprint: e2b08dd8e514c82d91199c4a92ae9ce14cf17ccb
+  sha1: 8c1884c06b1c3e1210b198b19bae0928e9bff08a
+commit_hash: 05c2eade
+uncommitted_changes: false
+name: service-metrics
+version: 0.2.0
