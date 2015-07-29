@@ -4,7 +4,7 @@ platform: linux
 image: docker:///cflondonservices/london-services-ci-base#stable
 
 inputs:
-  - name: service-metrics-release-master
+  - name: master
 
 run:
-  path: service-metrics-release-master/ci/scripts/merge-to-develop
+  path: master/ci/scripts/merge-to-develop

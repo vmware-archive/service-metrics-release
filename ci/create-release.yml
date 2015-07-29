@@ -4,11 +4,11 @@ platform: linux
 image: docker:///cflondonservices/london-services-ci-base#stable
 
 inputs:
-  - name: service-metrics-release-develop
+  - name: develop
   - name: version
 
 run:
-  path: service-metrics-release-develop/ci/scripts/create-release
+  path: develop/ci/scripts/create-release
 
 params:
   NAME:
