@@ -75,7 +75,7 @@ jobs:
   plan:
   - aggregate:
     - get: version
-      params: {bump: major}
+      params: {bump: major, pre: rc}
   - put: version
     params: {file: version/number}
 
