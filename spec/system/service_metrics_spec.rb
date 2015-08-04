@@ -1,4 +1,4 @@
-require 'system_spec_helper'
+require 'spec_helper'
 require 'tempfile'
 
 describe 'service metrics' do
