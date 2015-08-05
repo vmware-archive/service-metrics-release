@@ -48,4 +48,6 @@ builds:
     version: 1.1.0-rc.2
   6a568f37-eac8-43b1-b042-225cd7804f16:
     version: 1.1.0-rc.3
+  c240e301-244d-4a63-bfc1-609bca15b962:
+    version: 1.1.0-rc.4
 format-version: '2'
