@@ -11,8 +11,6 @@ describe 'Service Metrics Ctl script' do
   end
 
   it "templates the value of the interval" do
-    manifest['properties']['service_metrics']['interval'] = 5
-
     renderer = Bosh::Template::Renderer.new({context: manifest.to_json})
     rendered_template = renderer.render('jobs/service-metrics/templates/service_metrics_ctl.erb')
 

@@ -19,7 +19,7 @@ properties:
   service_metrics.metrics_command_args:
     description: "Arguments to be passed to the metrics command (see service_metrics.metrics_command)"
     default: []
-  service_metrics.interval:
+  service_metrics.execution_interval_seconds:
     description: "Interval to repeatedly obtain and emit metrics, in seconds"
     default: 60
   service_metrics.debug:

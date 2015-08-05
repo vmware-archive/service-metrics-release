@@ -27,7 +27,7 @@ case $1 in
       --metron-addr localhost:<%= p("metron_agent.dropsonde_incoming_port") %> \
       --metrics-cmd <%= p("service_metrics.metrics_command") %> \
       <%= p("service_metrics.metrics_command_args").collect { |e| "--metrics-cmd-arg '#{e}'" }.join(" ") %> \
-      --metrics-interval <%= p("service_metrics.interval") %>s \
+      --metrics-interval <%= p("service_metrics.execution_interval_seconds") %>s \
       <%= debug_string %> \
          >>$LOG_DIR/metron_agent.stdout.log \
          2>>$LOG_DIR/metron_agent.stderr.log
