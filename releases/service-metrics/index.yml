@@ -50,4 +50,6 @@ builds:
     version: 1.1.0-rc.3
   c240e301-244d-4a63-bfc1-609bca15b962:
     version: 1.1.0-rc.4
+  9c65f9f1-47c3-44ff-9e2f-91032632f44e:
+    version: 1.1.0-rc.5
 format-version: '2'
