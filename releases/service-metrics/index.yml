@@ -52,4 +52,6 @@ builds:
     version: 1.1.0-rc.4
   9c65f9f1-47c3-44ff-9e2f-91032632f44e:
     version: 1.1.0-rc.5
+  bb69ecfa-3b93-4f87-abc3-8999a73f2d83:
+    version: 1.1.0-rc.6
 format-version: '2'
