@@ -8,7 +8,7 @@ templates:
   syslog_forwarder.conf.erb: config/syslog_forwarder.conf
 
 packages:
-- common
+- utils
 - metron_agent
 - go
 - service-metrics
