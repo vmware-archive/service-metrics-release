@@ -24,6 +24,7 @@ case $1 in
     <% p("service_metrics.debug") == true ? debug_string = "--debug " : debug_string = "" %>
 
     exec chpst -u vcap:vcap ${PKG_DIR}/bin/service-metrics \
+      --origin <%= p('service_metrics.origin') %> \
       --metron-addr localhost:<%= p("metron_agent.dropsonde_incoming_port") %> \
       --metrics-cmd <%= p("service_metrics.metrics_command") %> \
       <%= p("service_metrics.metrics_command_args").collect { |e| "--metrics-cmd-arg '#{e}'" }.join(" ") %> \
@@ -45,4 +46,3 @@ case $1 in
     ;;
 
 esac
-

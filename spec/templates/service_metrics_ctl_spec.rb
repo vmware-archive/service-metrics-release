@@ -16,4 +16,11 @@ describe 'Service Metrics Ctl script' do
 
     expect(rendered_template).to include("--metrics-interval 5")
   end
+
+  it "templates the value of the origin" do
+    renderer = Bosh::Template::Renderer.new({context: manifest.to_json})
+    rendered_template = renderer.render('jobs/service-metrics/templates/service_metrics_ctl.erb')
+
+    expect(rendered_template).to include("--origin example-origin")
+  end
 end

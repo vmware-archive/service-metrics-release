@@ -9,6 +9,7 @@ releases:
 
 properties:
   service_metrics:
+    origin: example-origin
     execution_interval_seconds: 5
     metrics_command: /bin/echo
     metrics_command_args:
@@ -26,7 +27,7 @@ properties:
     address: 127.0.0.1
     port: 1234
   nats:
-    machines: 
+    machines:
     - 10.0.16.103
     port: 4222
     user: nats

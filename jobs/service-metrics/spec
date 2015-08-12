@@ -14,6 +14,8 @@ packages:
 - service-metrics
 
 properties:
+  service_metrics.origin:
+    description: "Used when initialising dropsonde. Should be set to something descriptive of the deployment (e.g. p-redis)"
   service_metrics.metrics_command:
     description: "Command to obtain metrics in JSON format"
   service_metrics.metrics_command_args:
@@ -25,7 +27,6 @@ properties:
   service_metrics.debug:
     description: "boolean value to turn on verbose mode"
     default: false
-
 
   syslog_daemon_config.address:
     description: "IP address for syslog aggregator"
