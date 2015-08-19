@@ -6,6 +6,8 @@ director_uuid: <%= `bosh status --uuid` %>
 releases:
 - name: service-metrics
   version: latest
+- name: cf
+  version: latest
 
 properties:
   service_metrics:
@@ -21,6 +23,7 @@ properties:
   metron_agent:
     deployment: service-metrics
     zone: z1
+    dropsonde_incoming_port: 3457
   loggregator_endpoint:
     shared_secret: PLACEHOLDER-LOGGREGATOR-SECRET
   syslog_aggregator:
@@ -41,6 +44,7 @@ jobs:
   - name: service-metrics
   templates:
   - {release: service-metrics, name: service-metrics}
+  - {name: metron_agent, release: cf}
 
 networks:
 - name: service-metrics

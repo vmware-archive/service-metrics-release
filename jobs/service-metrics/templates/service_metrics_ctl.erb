@@ -30,8 +30,8 @@ case $1 in
       <%= p("service_metrics.metrics_command_args").collect { |e| "--metrics-cmd-arg '#{e}'" }.join(" ") %> \
       --metrics-interval <%= p("service_metrics.execution_interval_seconds") %>s \
       <%= debug_string %> \
-         >>$LOG_DIR/metron_agent.stdout.log \
-         2>>$LOG_DIR/metron_agent.stderr.log
+         >>$LOG_DIR/service_metrics.stdout.log \
+         2>>$LOG_DIR/service_metrics.stderr.log
 
     ;;
 
@@ -41,7 +41,7 @@ case $1 in
     ;;
 
   *)
-    echo "Usage: metron_agent_ctl {start|stop}"
+    echo "Usage: service_metrics_ctl {start|stop}"
 
     ;;
 
