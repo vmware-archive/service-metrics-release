@@ -13,6 +13,9 @@ describe 'service metrics' do
       'firehose_sample',
       [:out, :err] => [@outFile.path, 'w']
     )
+
+    @metric_entry = find_metric_entry(@outFile)
+    expect(@metric_entry).to_not be_nil
   end
 
   after(:all) do
@@ -21,14 +24,42 @@ describe 'service metrics' do
   end
 
   it "it emits metrics" do
-    @found = false
+    expect(@metric_entry).to match(/name:"service-dummy"/)
+  end
+
+  it "it emits the origin" do
+    expect(@metric_entry).to match(/origin:"example-origin"/)
+  end
+
+  it "it emits ip" do
+    expect(@metric_entry).to match(/ip:"/)
+  end
+
+  it "it emits job" do
+    expect(@metric_entry).to match(/job:"service-metrics"/)
+  end
+
+  it "it emits index" do
+    expect(@metric_entry).to match(/index:"0"/)
+  end
+
+  it "it emits deployment" do
+    expect(@metric_entry).to match(/deployment:"service-metrics"/)
+  end
+
+  def find_metric_entry(firehose_out_file)
+    metric_entry = nil
+
     60.times do
-      if (@outFile.read.include? 'name:"service-dummy"')
-        @found = true
-        break
+      firehose_out_file.read.lines.each do | line |
+        if line =~ /origin:"example-origin".*name:"service-dummy"/
+          metric_entry = line
+          break
+        end
       end
-      sleep 1
+      metric_entry ? break : sleep(1)
     end
-    expect(@found).to be true
+
+    return metric_entry
   end
 end

@@ -19,7 +19,7 @@ properties:
     machines:
     - 10.244.0.42
   metron_agent:
-    deployment: bosh-lite
+    deployment: service-metrics
     zone: z1
   loggregator_endpoint:
     shared_secret: PLACEHOLDER-LOGGREGATOR-SECRET

@@ -19,7 +19,7 @@ properties:
     machines:
     - 10.0.16.104
   metron_agent:
-    deployment: bosh-aws
+    deployment: service-metrics
     zone: z1
   loggregator_endpoint:
     shared_secret: raicVesOldIdWyntedquadwyWokFafBi
