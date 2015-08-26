@@ -24,6 +24,9 @@ properties:
   service_metrics.debug:
     description: "boolean value to turn on verbose mode"
     default: false
+  service_metrics.monit_dependencies:
+    description: "Array of monit service dependencies"
+    default: []
 
   syslog_daemon_config.address:
     description: "IP address for syslog aggregator"

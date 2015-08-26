@@ -17,6 +17,7 @@ properties:
     metrics_command_args:
     - -n
     - '[{"key":"service-dummy","value":99,"unit":"metric"}]'
+    monit_dependencies: []
   etcd:
     machines:
     - 10.0.16.104
