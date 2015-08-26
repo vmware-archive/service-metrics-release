@@ -60,4 +60,6 @@ builds:
     version: 1.2.0-rc.1
   ad89edd2-db6b-437a-a0a2-680d8820bbd8:
     version: 1.2.0-rc.3
+  e268292c-1ccb-4d97-b5ef-d684e0f21e37:
+    version: 1.2.0-rc.4
 format-version: '2'
