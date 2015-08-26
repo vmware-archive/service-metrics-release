@@ -1,8 +1,5 @@
 #!/bin/bash -eux
 
-go get github.com/cloudfoundry/noaa/firehose_sample
-# go install github.com/cloudfoundry/noaa/firehose_sample
-
 MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # This script expects to live two directories below the base directory.
