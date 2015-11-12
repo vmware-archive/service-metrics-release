@@ -70,4 +70,6 @@ builds:
     version: 1.3.0-rc.1
   489d91af-f2a0-499c-8bcc-5f881d437fc7:
     version: 1.4.0-rc.1
+  bc0ba8a4-940e-4156-8af2-2f551bd0c9cc:
+    version: 1.4.0
 format-version: '2'
