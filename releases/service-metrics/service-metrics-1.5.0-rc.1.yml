@@ -1,0 +1,31 @@
+---
+packages:
+- name: utils
+  version: f50e3ca258011c18ff0ea50882cf5912db741d36
+  fingerprint: f50e3ca258011c18ff0ea50882cf5912db741d36
+  sha1: 3bb6a3cd7e520e6f60b05a42056ded63d12e629d
+  dependencies: []
+- name: service-metrics
+  version: cc7290112cfaa96e7b3153fcbed0e994360fef47
+  fingerprint: cc7290112cfaa96e7b3153fcbed0e994360fef47
+  sha1: 8ece5794f873ca67d9762d76d80d2be8412469e5
+  dependencies:
+  - go
+- name: go
+  version: 1c91feb55b72e9340a52db974f6d2927b2be225c
+  fingerprint: 1c91feb55b72e9340a52db974f6d2927b2be225c
+  sha1: 2bb289a742de85cee6a9cffbcf142df5eb6acd4e
+  dependencies: []
+jobs:
+- name: service-metrics
+  version: 25a0b91bd7d549635df2ca2f89874d34a9e51116
+  fingerprint: 25a0b91bd7d549635df2ca2f89874d34a9e51116
+  sha1: 36407ce8fda6826b191a972b39d541692bffc217
+license:
+  version: e2b08dd8e514c82d91199c4a92ae9ce14cf17ccb
+  fingerprint: e2b08dd8e514c82d91199c4a92ae9ce14cf17ccb
+  sha1: 8c1884c06b1c3e1210b198b19bae0928e9bff08a
+commit_hash: 377cde17
+uncommitted_changes: false
+name: service-metrics
+version: 1.5.0-rc.1
