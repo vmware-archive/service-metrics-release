@@ -3,7 +3,7 @@ require 'bosh/template/renderer'
 require 'yaml'
 
 describe 'Service Metrics Ctl script' do
-  let(:manifest){ YAML.load_file('manifests/service-metrics-lite.yml')}
+  let(:manifest){ YAML.load_file('spec/templates/fixtures/manifest.yml')}
 
   before do
     manifest['properties']['service_metrics']['debug'] = false
@@ -21,6 +21,6 @@ describe 'Service Metrics Ctl script' do
     renderer = Bosh::Template::Renderer.new({context: manifest.to_json})
     rendered_template = renderer.render('jobs/service-metrics/templates/service_metrics_ctl.erb')
 
-    expect(rendered_template).to include("--origin example-origin")
+    expect(rendered_template).to include("--origin service-metrics")
   end
 end

@@ -1,0 +1,63 @@
+---
+name: &name service-metrics
+
+director_uuid: <director UUID>
+
+stemcells:
+- alias: trusty
+  os: ubuntu-trusty
+  version: latest
+
+releases:
+- name: *name
+  version: latest
+- name: loggregator
+  version: 11
+
+instance_groups:
+- name: service-metrics
+  instances: 1
+  jobs:
+  - {name: service-metrics, release: *name}
+  - {name: metron_agent, release: loggregator}
+  stemcell: trusty
+  vm_type: medium
+  networks:
+  - name: service-metrics
+
+properties:
+  service_metrics:
+    origin: *name
+    execution_interval_seconds: 5
+    metrics_command: /bin/echo
+    metrics_command_args:
+    - -n
+    - '[{"key":"service-dummy","value":99,"unit":"metric"}]'
+    monit_dependencies: []
+    nats:
+      machines:
+      - 10.0.1.103
+      port: 4222
+      user: nats
+      password: <secret>
+    etcd:
+      machines:
+      - 10.0.1.104
+  metron_agent:
+    zone: z1
+    deployment: *name
+    dropsonde_incoming_port: 3457
+  metron_endpoint:
+    shared_secret: <secret>
+  loggregator:
+    etcd:
+      machines:
+        - 10.0.1.104
+  loggregator_endpoint:
+    shared_secret: <secret>
+
+update:
+  canaries: 1
+  max_in_flight: 1
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
