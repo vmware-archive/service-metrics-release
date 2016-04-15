@@ -7,7 +7,7 @@ inputs:
   - name: service-metrics-release
 
 run:
-  path: service-metrics-release/ci/scripts/release-test.sh
+  path: service-metrics-release/ci/scripts/system-tests.sh
 
 params:
   CF_API:
