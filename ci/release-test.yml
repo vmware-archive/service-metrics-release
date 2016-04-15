@@ -1,13 +1,13 @@
 ---
 platform: linux
 
-image: docker:///cflondonservices/london-services-ci-base#stable
+image: docker:///cflondonservices/on-demand-service-broker-ci
 
 inputs:
-  - name: develop
+  - name: service-metrics-release
 
 run:
-  path: develop/ci/scripts/release-test
+  path: service-metrics-release/ci/scripts/release-test.sh
 
 params:
   CF_API:

@@ -40,5 +40,5 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.order = 'random'
   config.full_backtrace = true
+  config.color = true
 end
-
