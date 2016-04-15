@@ -1,5 +1,5 @@
 ---
-go/go1.4.1.linux-amd64.tar.gz:
-  object_id: 2b726ae5-b75e-458a-8967-f90d6e88c119
-  sha: 3e871200e13c0b059b14866d428910de0a4c51ed
-  size: 62402109
+go/go1.6.1.linux-amd64.tar.gz:
+  object_id: 4f5cb6e6-299d-4820-b56f-449224d4c892
+  sha: c73492474dcc7a233772d27e948b74468d9f1849
+  size: 84824395
