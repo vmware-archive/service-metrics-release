@@ -4,4 +4,3 @@ blobstore:
   provider: s3
   options:
     bucket_name: service-metrics-release-blobs
-    endpoint: https://s3-eu-west-1.amazonaws.com
