@@ -18,6 +18,10 @@ module Helpers
       ENV['DOPPLER_ADDR'] || "wss://doppler.10.244.0.34.xip.io:443"
     end
 
+    def deployment_name
+      ENV.fetch('DEPLOYMENT_NAME')
+    end
+
     def target_cf
       `cf api --skip-ssl-validation #{cf_api}`
     end
@@ -40,5 +44,5 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.order = 'random'
   config.full_backtrace = true
+  config.color = true
 end
-

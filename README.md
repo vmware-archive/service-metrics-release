@@ -2,14 +2,11 @@
 
 A BOSH release for [service-metrics](https://github.com/pivotal-cf-experimental/service-metrics).
 
-## Running the spec tests
+## Running the system tests
 
-The simplest way to run the spec tests is to use the `fly execute` command with the `ci/release-test.yml` task file, as follows (replace `<PASSWORD>`):
-
-```
-CF_API=https://api.cfintegration-eu.cf-app.com \
-CF_PASSWORD=<PASSWORD> \
-CF_USERNAME=admin \
-DOPPLER_ADDR=wss://doppler.cfintegration-eu.cf-app.com:443 \
-fly -t london-concourse execute --config ci/release-test.yml --input "develop=." --privileged
-```
+1. Deploy this release (and metron_agent) using a manifest similar to the one in `docs/example_manifest.yml`.
+1. `cp .envrc.template .envrc`
+1. Fill in the appropriate values for your environment
+1. `go get github.com/cloudfoundry/noaa/samples/firehose`
+1. `bundle install`
+1. `bundle exec rake spec`

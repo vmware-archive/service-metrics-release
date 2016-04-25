@@ -1,0 +1,16 @@
+---
+platform: linux
+
+image: docker:///cflondonservices/on-demand-service-broker-ci
+
+inputs:
+  - name: service-metrics-release
+
+run:
+  path: service-metrics-release/ci/scripts/system-tests.sh
+
+params:
+  CF_API:
+  CF_USERNAME:
+  CF_PASSWORD:
+  DOPPLER_ADDR:

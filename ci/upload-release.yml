@@ -1,0 +1,19 @@
+---
+platform: linux
+
+image: docker:///cflondonservices/on-demand-service-broker-ci
+
+inputs:
+- name: service-metrics-release
+  path: release-to-upload
+- name: services-enablement-meta
+
+run:
+  path: services-enablement-meta/ci-scripts/upload-release.sh
+
+params:
+  BOSH_URL:
+  BOSH_CA_CERT:
+  BOSH_CLIENT:
+  BOSH_CLIENT_SECRET:
+  RELEASE_NAME:

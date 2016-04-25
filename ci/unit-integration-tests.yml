@@ -1,0 +1,10 @@
+---
+platform: linux
+
+image: docker:///cflondonservices/on-demand-service-broker-ci
+
+inputs:
+- name: service-metrics-release
+
+run:
+  path: service-metrics-release/ci/scripts/unit-integration-tests.sh

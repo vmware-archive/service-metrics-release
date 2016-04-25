@@ -1,0 +1,23 @@
+---
+platform: linux
+
+image: docker:///cflondonservices/on-demand-service-broker-ci
+
+inputs:
+- name: final-tag
+  path: release-to-create
+- name: services-enablement-meta
+
+outputs:
+- name: final-tarball
+  path: tarball-to-upload
+- name: final-metadata
+  path: release-to-create-metadata
+
+run:
+  path: services-enablement-meta/ci-scripts/create-final-release.sh
+
+params:
+  RELEASE_NAME:
+  AWS_ACCESS_KEY_ID:
+  AWS_SECRET_ACCESS_KEY:

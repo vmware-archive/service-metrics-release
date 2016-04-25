@@ -10,7 +10,7 @@ describe 'service metrics' do
         "DOPPLER_ADDR" => doppler_address,
         "CF_ACCESS_TOKEN" => cf_auth_token
       },
-      'firehose_sample',
+      'firehose',
       [:out, :err] => [@outFile.path, 'w']
     )
 
@@ -28,7 +28,7 @@ describe 'service metrics' do
   end
 
   it "it emits the origin" do
-    expect(@metric_entry).to match(/origin:"example-origin"/)
+    expect(@metric_entry).to match(/origin:"#{deployment_name}"/)
   end
 
   it "it emits ip" do
@@ -44,7 +44,7 @@ describe 'service metrics' do
   end
 
   it "it emits deployment" do
-    expect(@metric_entry).to match(/deployment:"service-metrics"/)
+    expect(@metric_entry).to match(/deployment:"#{deployment_name}"/)
   end
 
   def find_metric_entry(firehose_out_file)
@@ -52,7 +52,7 @@ describe 'service metrics' do
 
     60.times do
       firehose_out_file.read.lines.each do | line |
-        if line =~ /origin:"example-origin".*name:"service-dummy"/
+        if line =~ /origin:"#{deployment_name}".*name:"service-dummy"/
           metric_entry = line
           break
         end
