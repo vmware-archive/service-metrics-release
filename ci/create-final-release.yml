@@ -6,7 +6,7 @@ image_resource:
   source: {repository: pcfservicesenablement/services-enablement-ci}
 
 inputs:
-- name: metrics-final-release-tag
+- name: metrics-final-release-tag2
   path: release-to-create
 - name: services-enablement-meta
 
