@@ -6,12 +6,12 @@ image_resource:
   source: {repository: pcfservicesenablement/services-enablement-ci}
 
 inputs:
-- name: final-tag
+- name: metrics-final-release-tag
 
 outputs:
 - name: metrics-with-tag
 
 run:
-  path: final-tag/ci/push-metrics-tag.sh
+  path: metrics-final-release-tag/ci/push-metrics-tag.sh
 
 params: {}
