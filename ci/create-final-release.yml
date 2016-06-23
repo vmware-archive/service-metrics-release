@@ -20,4 +20,4 @@ run:
   path: services-enablement-meta/ci-scripts/create-final-release.sh
 
 params:
-  RELEASE_NAME:
+  RELEASE_NAME: 
