@@ -1,7 +1,7 @@
 #!/bin/bash -eu
 set -o pipefail
 
-RELEASE_DIR=$(pwd)/metrics-final-release-tag2
+RELEASE_DIR=$(pwd)/metrics-final-release-tag3
 METRICS_DIR=$RELEASE_DIR/src/service-metrics
 TAG_DIR=$(pwd)/metrics-with-tag
 
