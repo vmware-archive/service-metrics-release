@@ -6,7 +6,7 @@ image_resource:
   source: {repository: pcfservicesenablement/services-enablement-ci}
 
 inputs:
-- name: metrics-final-release-tag3
+- name: bosh-final-release-tag
   path: release-to-create
 - name: services-enablement-meta
 
@@ -20,4 +20,4 @@ run:
   path: services-enablement-meta/ci-scripts/create-final-release.sh
 
 params:
-  RELEASE_NAME: 
+  RELEASE_NAME:
