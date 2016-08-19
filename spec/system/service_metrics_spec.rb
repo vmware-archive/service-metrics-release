@@ -40,7 +40,7 @@ describe 'service metrics' do
   end
 
   it "it emits index" do
-    expect(@metric_entry).to match(/index:"0"/)
+    expect(@metric_entry).to match(/index:".*"/)
   end
 
   it "it emits deployment" do
