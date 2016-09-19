@@ -3,24 +3,61 @@ require 'bosh/template/renderer'
 require 'yaml'
 
 describe 'Service Metrics Ctl script' do
-  let(:manifest){ YAML.load_file('spec/templates/fixtures/manifest.yml')}
+  let(:renderer) do
+    Bosh::Template::Renderer.new(
+      context: BoshEmulator.director_merge(
+        YAML.load_file(manifest_file.path), 'service-metrics'
+      ).to_json
+    )
+  end
+  let(:rendered_template) { renderer.render('jobs/service-metrics/templates/service_metrics_ctl.erb') }
 
-  before do
-    manifest['properties']['service_metrics']['debug'] = false
-    manifest['properties']['metron_agent']['dropsonde_incoming_port'] = 12345
+  after(:each) { manifest_file.close }
+
+
+  context 'with a valid manifest' do
+    let(:manifest_file) { File.open('spec/templates/fixtures/valid_manifest.yml') }
+
+    it 'templates the value of the origin' do
+      expect(rendered_template).to include('--origin service-metrics')
+    end
+
+    context 'when properties with defaults are not configured' do
+      it 'templates the default dropsonde_incoming_port' do
+        expect(rendered_template).to include('--metron-addr localhost:3457')
+      end
+
+      it 'templates the default execution_interval_seconds' do
+        expect(rendered_template).to include('--metrics-interval 60')
+      end
+
+      it 'does not template the debug flag' do
+        expect(rendered_template).not_to include('--debug')
+      end
+    end
   end
 
-  it "templates the value of the interval" do
-    renderer = Bosh::Template::Renderer.new({context: manifest.to_json})
-    rendered_template = renderer.render('jobs/service-metrics/templates/service_metrics_ctl.erb')
+  context 'with optional fields configured in the manifest' do
+    let(:manifest_file) { File.open('spec/templates/fixtures/valid_manifest_with_optional_fields.yml') }
 
-    expect(rendered_template).to include("--metrics-interval 5")
-  end
+    it 'templates the configured execution_interval_seconds' do
+      expect(rendered_template).to include('--metrics-interval 5')
+    end
 
-  it "templates the value of the origin" do
-    renderer = Bosh::Template::Renderer.new({context: manifest.to_json})
-    rendered_template = renderer.render('jobs/service-metrics/templates/service_metrics_ctl.erb')
+    it 'templates the configured metrics_command' do
+      expect(rendered_template).to include('--metrics-cmd /bin/echo')
+    end
 
-    expect(rendered_template).to include("--origin service-metrics")
+    it 'templates all the configured metrics_command_args' do
+      expect(rendered_template).to include(%Q{--metrics-cmd-arg '-n' --metrics-cmd-arg '[{"key":"service-dummy","value":99,"unit":"metric"}]'})
+    end
+
+    it 'templates the configured dropsonde_incoming_port' do
+      expect(rendered_template).to include('--metron-addr localhost:1234')
+    end
+
+    it 'templates the configured debug flag' do
+      expect(rendered_template).to include('--debug')
+    end
   end
 end

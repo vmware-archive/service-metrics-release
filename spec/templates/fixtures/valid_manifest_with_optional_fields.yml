@@ -33,7 +33,6 @@ properties:
     metrics_command_args:
     - -n
     - '[{"key":"service-dummy","value":99,"unit":"metric"}]'
-    monit_dependencies: []
     nats:
       machines:
       - 10.0.1.103
@@ -43,10 +42,11 @@ properties:
     etcd:
       machines:
       - 10.0.1.104
+    debug: true
   metron_agent:
     zone: z1
     deployment: *name
-    dropsonde_incoming_port: 3457
+    dropsonde_incoming_port: 1234
   metron_endpoint:
     shared_secret: <secret>
   loggregator:
