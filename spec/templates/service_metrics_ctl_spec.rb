@@ -27,6 +27,14 @@ describe 'Service Metrics Ctl script' do
         expect(rendered_template).to include('--metron-addr localhost:3457')
       end
 
+      it 'templates the default metrics_command' do
+        expect(rendered_template).to include('--metrics-cmd /var/vcap/jobs/service-metrics-adapter/bin/collect-service-metrics')
+      end
+
+      it 'does not template any metrics_command_args' do
+        expect(rendered_template).not_to include('--metrics-cmd-arg')
+      end
+
       it 'templates the default execution_interval_seconds' do
         expect(rendered_template).to include('--metrics-interval 60')
       end

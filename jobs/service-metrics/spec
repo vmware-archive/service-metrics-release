@@ -15,6 +15,7 @@ properties:
     description: "Used when initialising dropsonde. Should be set to something descriptive of the deployment (e.g. p-redis)"
   service_metrics.metrics_command:
     description: "Command to obtain metrics in JSON format"
+    default: /var/vcap/jobs/service-metrics-adapter/bin/collect-service-metrics
   service_metrics.metrics_command_args:
     description: "Arguments to be passed to the metrics command (see service_metrics.metrics_command)"
     default: []

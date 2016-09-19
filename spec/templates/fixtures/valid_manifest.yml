@@ -28,10 +28,6 @@ instance_groups:
 properties:
   service_metrics:
     origin: *name
-    metrics_command: /bin/echo
-    metrics_command_args:
-    - -n
-    - '[{"key":"service-dummy","value":99,"unit":"metric"}]'
     nats:
       machines:
       - 10.0.1.103
