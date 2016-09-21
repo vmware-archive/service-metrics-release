@@ -1,0 +1,17 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source: {repository: pcfservicesenablement/services-enablement-ci}
+
+inputs:
+- name: metrics-final-tag
+
+outputs:
+- name: metrics-with-tag
+
+run:
+  path: metrics-final-tag/ci/scripts/push-metrics-tag.sh
+
+params: {}
