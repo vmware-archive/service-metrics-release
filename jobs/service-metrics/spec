@@ -51,7 +51,7 @@ properties:
     description: "IP port of Cloud Foundry NATS server"
 
   etcd.machines:
-    description: "IPs pointing to the ETCD cluster"
+    description: "IP addresses of the ETCD cluster"
   etcd.maxconcurrentrequests:
     description: "Number of concurrent requests to ETCD"
     default: 10
