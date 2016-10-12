@@ -5,4 +5,22 @@ dependencies:
 - go
 
 files:
-- service-metrics/**/*.go
+- github.com/pivotal-cf-experimental/service-metrics/*.go
+- github.com/pivotal-cf-experimental/service-metrics/metrics/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/dropsonde/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/dropsonde/emitter/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/dropsonde/factories/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/dropsonde/instrumented_handler/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/dropsonde/instrumented_round_tripper/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/dropsonde/log_sender/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/dropsonde/logs/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/dropsonde/metric_sender/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/dropsonde/metricbatcher/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/dropsonde/metrics/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/dropsonde/runtime_stats/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/gosteno/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/gosteno/syslog/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/cloudfoundry/sonde-go/events/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/gogo/protobuf/proto/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/nu7hatch/gouuid/*.go
+- github.com/pivotal-cf-experimental/service-metrics/vendor/github.com/pivotal-golang/lager/*.go

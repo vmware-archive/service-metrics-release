@@ -1,14 +1,15 @@
+#!/usr/bin/env bash
+
 set -eu
 
+mkdir -p ${BOSH_INSTALL_TARGET}/src
+cp -a . ${BOSH_INSTALL_TARGET}/src
+
 export GOPATH=$BOSH_INSTALL_TARGET
-gopath_org=github.com/pivotal-cf-experimental
-gopath_project=$gopath_org/service-metrics
-mkdir -p $GOPATH/src/$gopath_org
-mv service-metrics $GOPATH/src/$gopath_org/
 
 export GOROOT=$(readlink -nf /var/vcap/packages/go)
 export PATH=$GOROOT/bin:$PATH
 
-go install $gopath_project
+go install github.com/pivotal-cf-experimental/service-metrics
 
 rm -rf ${BOSH_INSTALL_TARGET}/src ${BOSH_INSTALL_TARGET}/pkg
