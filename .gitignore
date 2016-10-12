@@ -16,3 +16,5 @@ vendor/bundle
 *#
 #*
 system_tests.sh
+bin/
+pkg/
