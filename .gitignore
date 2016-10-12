@@ -15,4 +15,4 @@ vendor/bundle
 *~
 *#
 #*
-.envrc
+system_tests.sh

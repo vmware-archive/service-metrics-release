@@ -1,7 +1,0 @@
-export GOPATH =
-export PATH =
-export CF_API =
-export CF_USERNAME =
-export CF_PASSWORD =
-export DOPPLER_ADDR =
-export DEPLOYMENT_NAME =
