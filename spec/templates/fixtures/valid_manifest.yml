@@ -28,15 +28,6 @@ instance_groups:
 properties:
   service_metrics:
     origin: *name
-    nats:
-      machines:
-      - 10.0.1.103
-      port: 4222
-      user: nats
-      password: <secret>
-    etcd:
-      machines:
-      - 10.0.1.104
   metron_agent:
     zone: z1
     deployment: *name
