@@ -6,11 +6,9 @@ if [ -z "$GOPATH" ]; then
   exit 1
 fi
 
-gopath_org=$GOPATH/src/github.com/pivotal-cf-experimental
-gopath_project=$gopath_org/service-metrics
+gopath_project=$GOPATH/src/github.com/pivotal-cf-experimental/service-metrics
 
-mkdir -p $gopath_org
-mv service-metrics-release/src/service-metrics $gopath_org/
+mv service-metrics-release/src $GOPATH
 
 pushd $gopath_project > /dev/null
 ./scripts/run-tests.sh
