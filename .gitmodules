@@ -1,6 +1,6 @@
-[submodule "src/service-metrics"]
-	path = src/service-metrics
-	url = git@github.com:pivotal-cf-experimental/service-metrics.git
 [submodule "docs"]
 	path = docs
 	url = git@github.com:pivotal-cf/docs-service-metrics.git
+[submodule "src/github.com/pivotal-cf-experimental/service-metrics"]
+	path = src/github.com/pivotal-cf-experimental/service-metrics
+	url = git@github.com:pivotal-cf-experimental/service-metrics.git
