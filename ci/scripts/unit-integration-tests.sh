@@ -8,7 +8,7 @@ fi
 
 gopath_project=$GOPATH/src/github.com/pivotal-cf-experimental/service-metrics
 
-mv service-metrics-release/src $GOPATH
+cp -R service-metrics-release/src $GOPATH
 
 pushd $gopath_project > /dev/null
 ./scripts/run-tests.sh
