@@ -7,11 +7,12 @@ image_resource:
 
 inputs:
 - name: metrics-final-tag
+- name: metrics-ci-scripts
 
 outputs:
 - name: metrics-with-tag
 
 run:
-  path: metrics-final-tag/ci/scripts/push-metrics-tag.sh
+  path: metrics-ci-scripts/ci/scripts/push-metrics-tag.sh
 
 params: {}
