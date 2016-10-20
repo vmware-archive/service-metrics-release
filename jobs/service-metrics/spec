@@ -6,7 +6,7 @@ templates:
   syslog_forwarder.conf.erb: config/syslog_forwarder.conf
 
 packages:
-- utils
+- service-metrics_utils
 - service-metrics
 
 properties:

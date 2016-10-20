@@ -1,4 +1,4 @@
 ---
-name: utils
+name: service-metrics_utils
 files:
 - utils/pid_utils.sh
