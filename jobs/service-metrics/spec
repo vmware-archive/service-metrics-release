@@ -7,7 +7,6 @@ templates:
 
 packages:
 - utils
-- go
 - service-metrics
 
 properties:
