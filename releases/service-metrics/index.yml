@@ -86,4 +86,6 @@ builds:
     version: 1.5.0
   ffa786e7-9eda-4749-ba2c-a2eeb805fa27:
     version: 1.5.1
+  d205fd1a-50d9-404b-aa74-9dc083aa6917:
+    version: 1.5.2
 format-version: '2'
