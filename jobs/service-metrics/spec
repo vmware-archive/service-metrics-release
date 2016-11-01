@@ -3,7 +3,6 @@ name: service-metrics
 
 templates:
   service_metrics_ctl.erb: bin/service_metrics_ctl
-  syslog_forwarder.conf.erb: config/syslog_forwarder.conf
 
 packages:
 - service-metrics_utils
@@ -27,14 +26,6 @@ properties:
   service_metrics.monit_dependencies:
     description: "Array of monit service dependencies"
     default: []
-
-  syslog_daemon_config.address:
-    description: "IP address for syslog aggregator"
-  syslog_daemon_config.port:
-    description: "TCP port of syslog aggregator"
-  syslog_daemon_config.transport:
-    description: "Transport to be used when forwarding logs (tcp|udp|relp)."
-    default: "tcp"
 
   metron_agent.dropsonde_incoming_port:
     description: "Incoming port for dropsonde log messages"
