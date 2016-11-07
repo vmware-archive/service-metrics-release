@@ -4,6 +4,10 @@ run_dir=/var/vcap/sys/run/service-metrics
 log_dir=/var/vcap/sys/log/service-metrics
 pkg_dir=/var/vcap/packages/service-metrics
 
+mkdir -p $log_dir
+mkdir -p $run_dir
+chown -R vcap:vcap $log_dir
+
 pidfile=$run_dir/service-metrics.pid
 
 source /var/vcap/packages/service-metrics_utils/pid_utils.sh
@@ -41,11 +45,6 @@ case $1 in
   start)
     log info "start script: starting service metrics"
     pid_guard $pidfile "ServiceMetrics"
-
-    mkdir -p $run_dir
-    mkdir -p $log_dir
-
-    chown -R vcap:vcap $log_dir
 
     echo $$ > $pidfile
 
