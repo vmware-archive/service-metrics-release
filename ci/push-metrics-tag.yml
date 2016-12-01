@@ -12,6 +12,8 @@ outputs:
 - name: metrics-with-tag
 
 run:
-  path: metrics-final-tag/ci/scripts/push-metrics-tag.sh
+  path: metrics-final-tag/ci/scripts/push-submodule-tag.sh
 
-params: {}
+params:
+  SUBMODULE_PATH: src/github.com/pivotal-cf-experimental/service-metrics
+  TAG_PATH: metrics-with-tag

@@ -12,6 +12,8 @@ outputs:
 - name: docs-with-tag
 
 run:
-  path: metrics-final-tag/ci/scripts/push-docs-tag.sh
+  path: metrics-final-tag/ci/scripts/push-submodule-tag.sh
 
-params: {}
+params:
+  SUBMODULE_PATH: docs
+  TAG_PATH: docs-with-tag
