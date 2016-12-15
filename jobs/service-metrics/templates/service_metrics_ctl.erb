@@ -40,6 +40,13 @@ metrics_log() {
 }
 export -f metrics_log
 
+ensure_dir() {
+  local dir=$1
+  mkdir -p "${dir}"
+  chown -LR vcap:vcap "${dir}"
+  chmod 750 "${dir}"
+}
+
 case $1 in
 
   start)
@@ -47,6 +54,7 @@ case $1 in
     pid_guard $pidfile "ServiceMetrics"
 
     echo $$ > $pidfile
+    ensure_dir "$(dirname $pidfile)"
 
     <% p("service_metrics.debug") == true ? debug_string = "--debug " : debug_string = "" %>
 

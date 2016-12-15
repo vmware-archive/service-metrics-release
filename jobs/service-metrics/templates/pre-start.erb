@@ -1,0 +1,20 @@
+#!/bin/bash -e
+
+JOB_DIR=/var/vcap/jobs/service-metrics
+ROOT_LOG_DIR=/var/vcap/sys/log
+INIT_LOG_DIR=/var/vcap/sys/log/service-metrics
+
+ensure_dir() {
+  local dir=$1
+  mkdir -p "${dir}"
+  chown -LR vcap:vcap "${dir}"
+  chmod 750 "${dir}"
+}
+
+main() {
+  ensure_dir "${JOB_DIR}"
+  ensure_dir "${ROOT_LOG_DIR}"
+  ensure_dir "${INIT_LOG_DIR}"
+}
+
+main
