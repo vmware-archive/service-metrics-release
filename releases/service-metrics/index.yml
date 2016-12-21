@@ -88,4 +88,6 @@ builds:
     version: 1.5.1
   d205fd1a-50d9-404b-aa74-9dc083aa6917:
     version: 1.5.2
+  ea06e076-a8be-4b50-a1f3-6ff43f5a4f54:
+    version: 1.5.3
 format-version: '2'
