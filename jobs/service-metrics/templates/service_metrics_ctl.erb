@@ -1,12 +1,20 @@
 #!/bin/bash -e
 
+job_dir=/var/vcap/jobs/service-metrics
 run_dir=/var/vcap/sys/run/service-metrics
 log_dir=/var/vcap/sys/log/service-metrics
 pkg_dir=/var/vcap/packages/service-metrics
 
-mkdir -p $log_dir
-mkdir -p $run_dir
-chown -R vcap:vcap $log_dir
+ensure_dir() {
+  local dir=$1
+  mkdir -p "${dir}"
+  find -L "${dir}" | grep -v "packages" | xargs chown vcap:vcap
+  chmod 750 "${dir}"
+}
+
+ensure_dir $job_dir
+ensure_dir $log_dir
+ensure_dir $run_dir
 
 pidfile=$run_dir/service-metrics.pid
 
@@ -40,13 +48,6 @@ metrics_log() {
 }
 export -f metrics_log
 
-ensure_dir() {
-  local dir=$1
-  mkdir -p "${dir}"
-  chown -LR vcap:vcap "${dir}"
-  chmod 750 "${dir}"
-}
-
 case $1 in
 
   start)
@@ -54,7 +55,8 @@ case $1 in
     pid_guard $pidfile "ServiceMetrics"
 
     echo $$ > $pidfile
-    ensure_dir "$(dirname $pidfile)"
+    chown vcap:vcap $pidfile
+    chmod 750 $pidfile
 
     <% p("service_metrics.debug") == true ? debug_string = "--debug " : debug_string = "" %>
 

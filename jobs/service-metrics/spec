@@ -3,7 +3,6 @@ name: service-metrics
 
 templates:
   service_metrics_ctl.erb: bin/service_metrics_ctl
-  pre-start.erb: bin/pre-start
 
 packages:
 - service-metrics_utils
