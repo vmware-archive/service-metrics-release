@@ -1,0 +1,38 @@
+# Copyright (C) 2015-Present Pivotal Software, Inc. All rights reserved.
+# This program and the accompanying materials are made available under the terms of the under the Apache License, Version 2.0 (the "License”); you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+---
+name: service-metrics
+
+templates:
+  service_metrics_ctl.erb: bin/service_metrics_ctl
+
+packages:
+- service-metrics_utils
+- service-metrics
+
+properties:
+  service_metrics.origin:
+    description: "Used when initialising dropsonde. Should be set to something descriptive of the deployment (e.g. service-name)"
+  service_metrics.metrics_command:
+    description: "Command to obtain metrics in JSON format"
+    default: /var/vcap/jobs/service-metrics-adapter/bin/collect-service-metrics
+  service_metrics.metrics_command_args:
+    description: "Arguments to be passed to the metrics command (see service_metrics.metrics_command)"
+    default: []
+  service_metrics.execution_interval_seconds:
+    description: "Interval to repeatedly obtain and emit metrics, in seconds"
+    default: 60
+  service_metrics.debug:
+    description: "boolean value to turn on verbose mode"
+    default: false
+  service_metrics.monit_dependencies:
+    description: "Array of monit service dependencies"
+    default: []
+
+  metron_agent.dropsonde_incoming_port:
+    description: "Incoming port for dropsonde log messages"
+    default: 3457

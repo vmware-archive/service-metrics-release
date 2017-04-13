@@ -1,0 +1,91 @@
+#!/bin/bash -e
+
+# Copyright (C) 2015-Present Pivotal Software, Inc. All rights reserved.
+# This program and the accompanying materials are made available under the terms of the under the Apache License, Version 2.0 (the "License”); you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+job_dir=/var/vcap/jobs/service-metrics
+run_dir=/var/vcap/sys/run/service-metrics
+log_dir=/var/vcap/sys/log/service-metrics
+pkg_dir=/var/vcap/packages/service-metrics
+
+ensure_dir() {
+  local dir=$1
+  mkdir -p "${dir}"
+  find -L "${dir}" | grep -v "packages" | xargs chown vcap:vcap
+  chmod 750 "${dir}"
+}
+
+ensure_dir $job_dir
+ensure_dir $log_dir
+ensure_dir $run_dir
+
+pidfile=$run_dir/service-metrics.pid
+
+source /var/vcap/packages/service-metrics_utils/pid_utils.sh
+
+log_facility=user
+
+script_log_tag=service-metrics-ctl
+script_log_file=$log_dir/ctl.log
+metrics_log_tag=service-metrics
+metrics_log_file=$log_dir/service-metrics.log
+
+write_log() {
+  local log_tag=$1
+  local log_file=$2
+  local log_level=$3
+  logger --priority $log_facility.$log_level --tag $log_tag --stderr 2>> $log_file
+}
+export -f write_log
+
+log() {
+  local log_level=$1
+  shift
+  echo "$(date): $*" | write_log $script_log_tag $script_log_file $log_level
+}
+export -f log
+
+metrics_log() {
+  local log_level=$1
+  write_log $metrics_log_tag $metrics_log_file $log_level
+}
+export -f metrics_log
+
+case $1 in
+
+  start)
+    log info "start script: starting service metrics"
+    pid_guard $pidfile "ServiceMetrics"
+
+    echo $$ > $pidfile
+    chown vcap:vcap $pidfile
+    chmod 750 $pidfile
+
+    <% p("service_metrics.debug") == true ? debug_string = "--debug " : debug_string = "" %>
+
+    exec chpst -u vcap:vcap ${pkg_dir}/bin/service-metrics \
+      --origin <%= p('service_metrics.origin') %> \
+      --metron-addr localhost:<%= p("metron_agent.dropsonde_incoming_port") %> \
+      --metrics-cmd <%= p("service_metrics.metrics_command") %> \
+      <%= p("service_metrics.metrics_command_args").collect { |e| "--metrics-cmd-arg '#{e}'" }.join(" ") %> \
+      --metrics-interval <%= p("service_metrics.execution_interval_seconds") %>s \
+      <%= debug_string %> > >(metrics_log info) 2>&1
+
+    ;;
+
+  stop)
+    log info "stop script: stopping service-metrics"
+    kill_and_wait $pidfile 40
+    log info "stop script: completed stopping service-metrics"
+    ;;
+
+  *)
+    log warning "operation '$1' is not supported"
+    echo "Usage: service_metrics_ctl {start|stop}"
+
+    ;;
+
+esac
