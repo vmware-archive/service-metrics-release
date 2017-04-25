@@ -1,6 +1,12 @@
 # service-metrics-release
 
-A BOSH release for [service-metrics](https://github.com/pivotal-cf/service-metrics).
+A BOSH release for a [Service Metircs](https://github.com/pivotal-cf/service-metrics).
+
+Sevice Metrics is a framework for easily sending metrics to [Cloud Foundry's Loggregator](https://github.com/cloudfoundry/loggregator) system.
+
+## User Documentation
+
+User documentation can be found [here](https://docs.pivotal.io/svc-sdk/service-metrics). Documentation is targeted at service authors wishing to send metrics from their service and operators wanting to configure service metrics.
 
 ## Running the system tests
 
