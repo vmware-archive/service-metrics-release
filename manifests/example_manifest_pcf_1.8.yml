@@ -5,7 +5,7 @@
 # Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 ---
-name: &name service-metrics
+name: service-metrics
 
 director_uuid: <director UUID>
 
@@ -15,43 +15,47 @@ stemcells:
   version: latest
 
 releases:
-- name: *name
+- name: service-metrics
   version: latest
 - name: loggregator
-  version: 11
+  version: 52
 
 instance_groups:
 - name: service-metrics
   instances: 1
-  jobs:
-  - {name: service-metrics, release: *name}
-  - {name: metron_agent, release: loggregator}
   stemcell: trusty
-  vm_type: medium
+  vm_type: <vm type>
   networks:
+  - name: <network>
+  azs:
+  - <availability zone>
+  jobs:
   - name: service-metrics
+    release: service-metrics
+    properties:
+      service_metrics:
+        origin: metrics-source
+        execution_interval_seconds: 5
+        metrics_command: /bin/echo
+        metrics_command_args:
+        - -n
+        - '[{"key":"service-dummy","value":99,"unit":"metric"}]'
+        monit_dependencies: []
 
-properties:
-  service_metrics:
-    origin: metrics-source
-    execution_interval_seconds: 5
-    metrics_command: /bin/echo
-    metrics_command_args:
-    - -n
-    - '[{"key":"service-dummy","value":99,"unit":"metric"}]'
-    monit_dependencies: []
-  metron_agent:
-    zone: z1
-    deployment: *name
-    dropsonde_incoming_port: 3457
-  metron_endpoint:
-    shared_secret: <secret>
-  loggregator:
-    etcd:
-      machines:
-        - <cf-etcd-ip>
-  loggregator_endpoint:
-    shared_secret: <secret>
+  - name: metron_agent
+    release: loggregator
+    properties:
+      metron_agent:
+        zone: <availability zone>
+        deployment: <deployment name>
+      metron_endpoint:
+        shared_secret: <secret>
+      loggregator:
+        etcd:
+          machines:
+          - <cf etcd ip addresses>
+      loggregator_endpoint:
+        shared_secret: <secret>
 
 update:
   canaries: 1
