@@ -74,27 +74,6 @@ instance_groups:
       consul:
         from: consul_server
         deployment: <cf deployment name>
-    properties:
-      consul:
-        agent:
-          domain: <consul domain suffix for DNS>
-          servers:
-            lan:
-            - <consul LAN server IP addresses>
-        agent_cert: |+
-          -----BEGIN CERTIFICATE-----
-          <consul agent certificate>
-          -----END CERTIFICATE-----
-        agent_key: |+
-          -----BEGIN RSA PRIVATE KEY-----
-          <consul agent private key>
-          -----END RSA PRIVATE KEY-----
-        ca_cert: |+
-          -----BEGIN CERTIFICATE-----
-          <consul agent root certificate>
-          -----END CERTIFICATE-----
-        encrypt_keys:
-        - <consul encryption keys>
 
 update:
   canaries: 1
