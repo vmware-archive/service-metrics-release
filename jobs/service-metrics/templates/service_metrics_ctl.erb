@@ -33,31 +33,15 @@ script_log_file=$log_dir/ctl.log
 metrics_log_tag=service-metrics
 metrics_log_file=$log_dir/service-metrics.log
 
-write_log() {
-  local log_tag=$1
-  local log_file=$2
-  local log_level=$3
-  logger --priority $log_facility.$log_level --tag $log_tag --stderr 2>> $log_file
-}
-export -f write_log
-
 log() {
-  local log_level=$1
-  shift
-  echo "$(date): $*" | write_log $script_log_tag $script_log_file $log_level
+  echo "$(date): $*" > $metrics_log_file
 }
 export -f log
-
-metrics_log() {
-  local log_level=$1
-  write_log $metrics_log_tag $metrics_log_file $log_level
-}
-export -f metrics_log
 
 case $1 in
 
   start)
-    log info "start script: starting service metrics"
+    log "start script: starting service metrics"
     pid_guard $pidfile "ServiceMetrics"
 
     echo $$ > $pidfile
@@ -72,14 +56,14 @@ case $1 in
       --metrics-cmd <%= p("service_metrics.metrics_command") %> \
       <%= p("service_metrics.metrics_command_args").collect { |e| "--metrics-cmd-arg '#{e}'" }.join(" ") %> \
       --metrics-interval <%= p("service_metrics.execution_interval_seconds") %>s \
-      <%= debug_string %> > >(metrics_log info) 2>&1
+      <%= debug_string %> 2>&1 > $metrics_log_file
 
     ;;
 
   stop)
-    log info "stop script: stopping service-metrics"
+    log "stop script: stopping service-metrics"
     kill_and_wait $pidfile 40
-    log info "stop script: completed stopping service-metrics"
+    log "stop script: completed stopping service-metrics"
     ;;
 
   *)
