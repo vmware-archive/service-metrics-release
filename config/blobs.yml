@@ -1,5 +1,5 @@
 ---
-go/go1.7.5.linux-amd64.tar.gz:
-  object_id: 95205c07-ead7-4671-9933-16a1781a6a7f
-  sha: 7c6902ce8cd3b9963082d748c50df074e4896796
-  size: 84176916
+go/go1.8.3.linux-amd64.tar.gz:
+  object_id: 5c8ef705-e449-4c2c-af12-2342d34fced6
+  sha: 838c415896ef5ecd395dfabde5e7e6f8ac943c8e
+  size: 90029041
