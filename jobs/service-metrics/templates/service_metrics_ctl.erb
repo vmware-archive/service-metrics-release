@@ -56,7 +56,7 @@ case $1 in
       --metrics-cmd <%= p("service_metrics.metrics_command") %> \
       <%= p("service_metrics.metrics_command_args").collect { |e| "--metrics-cmd-arg '#{e}'" }.join(" ") %> \
       --metrics-interval <%= p("service_metrics.execution_interval_seconds") %>s \
-      <%= debug_string %> 2>&1 > $metrics_log_file
+      <%= debug_string %> 2>&1 >> $metrics_log_file
 
     ;;
 
