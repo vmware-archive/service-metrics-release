@@ -34,7 +34,7 @@ metrics_log_tag=service-metrics
 metrics_log_file=$log_dir/service-metrics.log
 
 log() {
-  echo "$(date): $*" > $metrics_log_file
+  echo "$(date): $*" >> $script_log_file
 }
 export -f log
 
