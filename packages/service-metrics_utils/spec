@@ -7,4 +7,5 @@
 ---
 name: service-metrics_utils
 files:
-- utils/pid_utils.sh
+- utils/lib/pid_utils.sh
+- utils/lib/log.sh

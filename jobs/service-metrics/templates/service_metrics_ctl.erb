@@ -24,7 +24,10 @@ ensure_dir $run_dir
 
 pidfile=$run_dir/service-metrics.pid
 
-source /var/vcap/packages/service-metrics_utils/pid_utils.sh
+utils_dir=/var/vcap/packages/service-metrics_utils
+
+source $utils_dir/pid_utils.sh
+source $utils_dir/log.sh
 
 log_facility=user
 
@@ -32,11 +35,7 @@ script_log_tag=service-metrics-ctl
 script_log_file=$log_dir/ctl.log
 metrics_log_tag=service-metrics
 metrics_log_file=$log_dir/service-metrics.log
-
-log() {
-  echo "$(date): $*" > $metrics_log_file
-}
-export -f log
+export LOG_FILE=$metrics_log_file
 
 case $1 in
 
