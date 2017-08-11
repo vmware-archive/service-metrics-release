@@ -21,5 +21,5 @@ pushd $(dirname $0)/../.. > /dev/null
     ./scripts/run-tests.sh
   popd > /dev/null
 
-  bats ./src/utils/test/*
+  bats --tap ./src/utils/test/*
 popd > /dev/null
