@@ -7,3 +7,4 @@
 set -e
 
 cp -a utils/lib/* ${BOSH_INSTALL_TARGET}
+cp -a utils/test/* ${BOSH_INSTALL_TARGET}
