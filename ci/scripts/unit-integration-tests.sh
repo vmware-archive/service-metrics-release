@@ -20,6 +20,6 @@ pushd $(dirname $0)/../.. > /dev/null
 
     ./scripts/run-tests.sh
   popd > /dev/null
-popd > /dev/null
 
-bats ./src/utils/test/*
+  bats ./src/utils/test/*
+popd > /dev/null
