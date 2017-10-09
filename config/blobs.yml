@@ -1,5 +1,4 @@
----
-go/go1.8.3.linux-amd64.tar.gz:
-  object_id: 5c8ef705-e449-4c2c-af12-2342d34fced6
-  sha: 838c415896ef5ecd395dfabde5e7e6f8ac943c8e
-  size: 90029041
+go/go1.8.4.linux-amd64.tar.gz:
+  size: 99071672
+  object_id: 39a122ea-2ded-4961-6c93-f6d2619de502
+  sha: dad24dc0b75210bc02c8cd16e62e8d71a6cd6e2d
