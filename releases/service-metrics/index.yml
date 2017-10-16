@@ -9,6 +9,8 @@ builds:
     version: 1.5.7
   afbbbbcc-7464-4555-6edc-30c1e21fbefa:
     version: 1.5.9
+  c2dee8a8-916b-4d34-6a5a-fd91eff8406c:
+    version: 1.5.10
   c5ae860f-ab62-42bf-b353-3af2f9da604a:
     version: 1.5.6
 format-version: "2"
