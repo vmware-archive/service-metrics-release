@@ -7,8 +7,6 @@
 ---
 name: service-metrics
 
-director_uuid: <director UUID>
-
 stemcells:
 - alias: trusty
   os: ubuntu-trusty
@@ -18,7 +16,7 @@ releases:
 - name: service-metrics
   version: latest
 - name: loggregator
-  version: 92
+  version: 99
 - name: consul
   version: 174
 
@@ -42,35 +40,38 @@ instance_groups:
         metrics_command_args:
         - -n
         - '[{"key":"service-dummy","value":99,"unit":"metric"}]'
+        monit_dependencies: []
 
   - name: metron_agent
     release: loggregator
     properties:
       loggregator:
         tls:
-          ca_cert: |
-            -----BEGIN CERTIFICATE-----
-            <loggregator root certificate>
-            -----END CERTIFICATE-----
           metron:
-            cert: |
+            cert:|
               -----BEGIN CERTIFICATE-----
               <loggregator client certificate>
               -----END CERTIFICATE-----
-            key: |
+            key:|
               -----BEGIN RSA PRIVATE KEY-----
               <loggregator client private key>
               -----END RSA PRIVATE KEY-----
+          ca_cert:|
+            -----BEGIN CERTIFICATE-----
+            <loggregator root certificate>
+            -----END CERTIFICATE-----
 
   - name: consul_agent
     release: consul
     consumes:
+      consul: nil
       consul_client:
-        deployment: <cf deployment name>
         from: consul_client_link
-      consul_common:
         deployment: <cf deployment name>
+      consul_common:
         from: consul_common_link
+        deployment: <cf deployment name>
+      consul_server: nil
 
 update:
   canaries: 1
