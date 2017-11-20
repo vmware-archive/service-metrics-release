@@ -8,4 +8,9 @@ MY_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export GOPATH=$MY_DIR
 export PATH=$GOPATH/bin:$PATH
 
-source system_tests.sh
+export CF_API=
+export CF_USERNAME=
+export CF_PASSWORD=
+export DOPPLER_ADDR=
+export DEPLOYMENT_NAME=
+export CF_SSL_VALIDATION=
