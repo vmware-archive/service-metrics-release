@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+set -eu
+
+run_dir=/var/vcap/sys/run/service-metrics
+log_dir=/var/vcap/sys/log/service-metrics
+
+ensure_dir() {
+  local dir=$1
+  mkdir -p "${dir}"
+  find -L "${dir}" | grep -v "packages" | xargs chown vcap:vcap
+  chmod 750 "${dir}"
+}
+
+ensure_dir $log_dir
+ensure_dir $run_dir
+
+pidfile=$run_dir/service-metrics.pid
+
+utils_dir=/var/vcap/packages/service-metrics_utils
+source $utils_dir/log.sh
+
+log_facility=user
+script_log_tag=service-metrics-drain
+script_log_file=$log_dir/drain.log
+export LOG_FILE=$script_log_file
+
+if [ ! -f "${pidfile}" ] ; then
+  log "No PID file. Service Metrics not running"
+  echo 0
+  exit 0
+fi
+
+log "Shutting down service metrics with timeout 40 seconds"
+set +e
+start-stop-daemon \
+  --pidfile "${pidfile}" \
+  --retry "TERM/40/KILL" \
+  --oknodo \
+  --stop &>> ${script_log_file}
+
+exit_status=$?
+set -e
+
+case "${exit_status}" in
+  0)
+    log "Service Metrics shutdown successfully"
+    rm -f ${pidfile}
+    ;;
+  *)
+    log "Failed to exit . Start-stop-daemon exit_status: ${exit_status}"
+    exit 1
+    ;;
+esac
+
+echo 0
+exit 0

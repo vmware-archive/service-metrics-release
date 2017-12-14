@@ -61,8 +61,29 @@ case $1 in
 
   stop)
     log "stop script: stopping service-metrics"
-    kill_and_wait $pidfile 40
-    log "stop script: completed stopping service-metrics"
+    set +e
+    start-stop-daemon \
+      --stop \
+      --signal KILL \
+      --pidfile $pidfile
+    exit_status=$?
+    set -e
+
+    case "${exit_status}" in
+      0)
+        log "stop script: completed stopping service-metrics"
+        rm -f ${pidfile}
+        ;;
+      1)
+        log "stop script: service-metrics was not running"
+        rm -f ${pidfile}
+        ;;
+      *)
+        log "stop script: failed to exit. Start-stop-daemon exit_status: ${exit_status}"
+        exit 1
+        ;;
+    esac
+
     ;;
 
   *)

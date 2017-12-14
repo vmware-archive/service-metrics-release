@@ -9,6 +9,7 @@ name: service-metrics
 
 templates:
   service_metrics_ctl.erb: bin/service_metrics_ctl
+  drain.erb: bin/drain
 
 packages:
 - service-metrics_utils
