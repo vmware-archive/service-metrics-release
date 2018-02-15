@@ -5,73 +5,99 @@
 # Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 require 'spec_helper'
-require 'bosh/template/renderer'
+require 'bosh/template/test'
 require 'yaml'
 
 describe 'Service Metrics Ctl script' do
-  let(:renderer) do
-    Bosh::Template::Renderer.new(
-      context: BoshEmulator.director_merge(
-        YAML.load_file(manifest_file.path), 'service-metrics'
-      ).to_json
-    )
-  end
-  let(:rendered_template) { renderer.render('jobs/service-metrics/templates/service_metrics_ctl.erb') }
-
-  after(:each) { manifest_file.close }
-
-
-  context 'with a valid manifest' do
-    let(:manifest_file) { File.open('spec/templates/fixtures/valid_manifest.yml') }
-
-    it 'templates the value of the origin' do
-      expect(rendered_template).to include('--origin service-metrics')
-    end
-
-    context 'when properties with defaults are not configured' do
-      it 'templates the default dropsonde_incoming_port' do
-        expect(rendered_template).to include('--metron-addr localhost:3457')
-      end
-
-      it 'templates the default metrics_command' do
-        expect(rendered_template).to include('--metrics-cmd /var/vcap/jobs/service-metrics-adapter/bin/collect-service-metrics')
-      end
-
-      it 'does not template any metrics_command_args' do
-        expect(rendered_template).not_to include('--metrics-cmd-arg')
-      end
-
-      it 'templates the default execution_interval_seconds' do
-        expect(rendered_template).to include('--metrics-interval 60')
-      end
-
-      it 'does not template the debug flag' do
-        expect(rendered_template).not_to include('--debug')
-      end
-    end
+  before(:all) do
+    release_path = File.join(File.dirname(__FILE__), '../..')
+    release = Bosh::Template::Test::ReleaseDir.new(release_path)
+    job = release.job('service-metrics')
+    @template = job.template('bin/service_metrics_ctl')
   end
 
-  context 'with optional fields configured in the manifest' do
-    let(:manifest_file) { File.open('spec/templates/fixtures/valid_manifest_with_optional_fields.yml') }
+  it 'templates the origin' do
+    properties = job_properties(origin: 'some-origin')
+    control_script = @template.render(properties)
+    expect(control_script).to include('--origin some-origin')
+  end
+
+  context 'when optional properties are not configured' do
+    before(:all) do
+      properties = job_properties(origin: 'some-origin')
+      @control_script = @template.render(properties)
+    end
+
+    it 'templates the default dropsonde_incoming_port' do
+      expect(@control_script).to include('--metron-addr localhost:3457')
+    end
+
+    it 'templates the default metrics_command' do
+      expect(@control_script).to include(
+        '--metrics-cmd /var/vcap/jobs/service-metrics-adapter/bin/collect-service-metrics')
+    end
+
+    it 'does not template any metrics_command_args' do
+      expect(@control_script).not_to include('--metrics-cmd-arg')
+    end
+
+    it 'templates the default execution_interval_seconds' do
+      expect(@control_script).to include('--metrics-interval 60')
+    end
+
+    it 'does not template the debug flag' do
+      expect(@control_script).not_to include('--debug')
+    end
+  end
+
+  context 'when optional properties are configured in the manifest' do
+    before(:all) do
+      properties = job_properties(
+        origin: 'some-origin',
+        execution_interval_seconds: 5,
+        metrics_command: '/bin/echo',
+        metrics_command_args: ['-n', '[{"key":"service-dummy","value":99,"unit":"metric"}]'],
+        dropsonde_incoming_port: 1234,
+        debug: true
+      )
+      @control_script = @template.render(properties)
+    end
 
     it 'templates the configured execution_interval_seconds' do
-      expect(rendered_template).to include('--metrics-interval 5')
+      expect(@control_script).to include('--metrics-interval 5')
     end
 
     it 'templates the configured metrics_command' do
-      expect(rendered_template).to include('--metrics-cmd /bin/echo')
+      expect(@control_script).to include('--metrics-cmd /bin/echo')
     end
 
     it 'templates all the configured metrics_command_args' do
-      expect(rendered_template).to include(%Q{--metrics-cmd-arg '-n' --metrics-cmd-arg '[{"key":"service-dummy","value":99,"unit":"metric"}]'})
+      expect(@control_script).to include(
+        %Q{--metrics-cmd-arg '-n' --metrics-cmd-arg '[{"key":"service-dummy","value":99,"unit":"metric"}]'})
     end
 
     it 'templates the configured dropsonde_incoming_port' do
-      expect(rendered_template).to include('--metron-addr localhost:1234')
+      expect(@control_script).to include('--metron-addr localhost:1234')
     end
 
     it 'templates the configured debug flag' do
-      expect(rendered_template).to include('--debug')
+      expect(@control_script).to include('--debug')
     end
   end
+end
+
+def job_properties(origin:, execution_interval_seconds: nil, metrics_command: nil,
+  metrics_command_args: nil, dropsonde_incoming_port: nil, debug: nil)
+  {
+    'service_metrics' => {
+      'origin' => origin,
+      'execution_interval_seconds' => execution_interval_seconds,
+      'metrics_command' => metrics_command,
+      'metrics_command_args' => metrics_command_args,
+      'debug' => debug
+    },
+    'metron_agent' => {
+      'dropsonde_incoming_port' => dropsonde_incoming_port
+    }
+  }
 end
