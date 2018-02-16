@@ -16,14 +16,22 @@ describe 'Service Metrics Ctl script' do
   end
 
   it 'templates the origin' do
-    properties = job_properties(origin: 'some-origin')
+    properties = {
+      'service_metrics' => {
+        'origin' => 'some-origin'
+      }
+    }
     control_script = @template.render(properties)
     expect(control_script).to include('--origin some-origin')
   end
 
   context 'when optional properties are not configured' do
     before(:all) do
-      properties = job_properties(origin: 'some-origin')
+      properties = {
+        'service_metrics' => {
+          'origin' => 'some-origin'
+        }
+      }
       @control_script = @template.render(properties)
     end
 
@@ -51,14 +59,18 @@ describe 'Service Metrics Ctl script' do
 
   context 'when optional properties are configured in the manifest' do
     before(:all) do
-      properties = job_properties(
-        origin: 'some-origin',
-        execution_interval_seconds: 5,
-        metrics_command: '/bin/echo',
-        metrics_command_args: ['-n', '[{"key":"service-dummy","value":99,"unit":"metric"}]'],
-        dropsonde_incoming_port: 1234,
-        debug: true
-      )
+      properties = {
+        'service_metrics' => {
+          'origin' => 'some-origin',
+          'execution_interval_seconds' => 5,
+          'metrics_command' => '/bin/echo',
+          'metrics_command_args' => ['-n', '[{"key":"service-dummy","value":99,"unit":"metric"}]'],
+          'debug' => true
+        },
+        'metron_agent' => {
+          'dropsonde_incoming_port' => 1234
+        }
+      }
       @control_script = @template.render(properties)
     end
 
@@ -83,20 +95,4 @@ describe 'Service Metrics Ctl script' do
       expect(@control_script).to include('--debug')
     end
   end
-end
-
-def job_properties(origin:, execution_interval_seconds: nil, metrics_command: nil,
-  metrics_command_args: nil, dropsonde_incoming_port: nil, debug: nil)
-  {
-    'service_metrics' => {
-      'origin' => origin,
-      'execution_interval_seconds' => execution_interval_seconds,
-      'metrics_command' => metrics_command,
-      'metrics_command_args' => metrics_command_args,
-      'debug' => debug
-    },
-    'metron_agent' => {
-      'dropsonde_incoming_port' => dropsonde_incoming_port
-    }
-  }
 end
