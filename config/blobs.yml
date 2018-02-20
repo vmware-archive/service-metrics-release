@@ -1,4 +1,4 @@
-go/go1.9.4.linux-amd64.tar.gz:
-  size: 105600650
-  object_id: 4d030383-9928-4af6-6434-e8211d241b0b
-  sha: ed1bd37c356338a5a04923c183931a96687f202e
+go/go1.10.linux-amd64.tar.gz:
+  size: 119905205
+  object_id: bc75662c-62e2-4e5e-4fde-b378f46c81e6
+  sha: 693e2dfd99ef2d608b41c450efd9d277bf2a7f2f
