@@ -5,6 +5,8 @@ builds:
     version: 1.5.9-alpha1
   619d12e2-1667-45de-4f35-bb9998af7e35:
     version: 1.5.11
+  704f40a8-e825-4d77-63d5-96fc55427cf2:
+    version: 1.5.13
   876a5816-2ea2-409e-9114-5a3589aba0eb:
     version: 1.5.8
   8b4bda9a-56f0-4bcd-7234-94f6603982e2:
