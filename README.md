@@ -1,3 +1,6 @@
+# DEPRECATED
+This has been moved to [cloudfoundry/service-metrics-release](https://github.com/cloudfoundry/service-metrics-release)
+
 # service-metrics-release
 
 A BOSH release for a [Service Metrics](https://github.com/pivotal-cf/service-metrics).
